@@ -44,7 +44,7 @@ echo -e "\n-fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
 echo -e "\n-fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
 echo -e "\n- Konfiguration wurde abgeschlossen!"
 # -------------------------------------------------------------
-# Step 2) change the static ip-address
+# Step 2) install cowrie 
 # -------------------------------------------------------------
 # ########################################
 #  install cowrie ssh honeypot
@@ -56,10 +56,7 @@ echo -e "\n- warte 5 Sekunden"
 sleep 5
 cd /home/cowrie/
 git clone http://github.com/micheloosterhof/cowrie
-echo 'pip install --upgrade pip' >>  /home/cowrie/install.sh
-echo 'pip install --upgrade -r requirements.txt' >>  /home/cowrie/install.sh
-chmod +x /home/cowrie/install.sh
-chown cowrie:cowrie /home/cowrie/*
+chown cowrie:cowrie -R /home/cowrie/cowrie/
 apt-get install -y python3-pip
 echo "[program:cowrie]" >> /etc/supervisor/conf.d/cowrie.conf
 echo "command=/home/cowrie/cowrie/bin/cowrie start" >> /etc/supervisor/conf.d/cowrie.conf
@@ -77,6 +74,38 @@ chown cowrie:cowrie /var/log/cowrie/
 # upgrade pip
 pip install --upgrade pip
 pip install --upgrade -r requirements.txt
+# -------------------------------------------------------------
+# Step 3) install Filebeat for Raspberry Pi
+# -------------------------------------------------------------
+#
+# install Go 1.10.3
+cd ~
+git clone https://github.com/tgogos/rpi_golang.git
+cd rpi_golang/
+tar -xzf go1.4.3.linux-armv7.tar.gz -C /usr/local/
+export PATH=/usr/local/go/bin:$PATH
+echo "export PATH=/usr/local/go/bin:$PATH" >> /root/.bashrc
+echo -e "\n- Installation:" go version "abgeschlossen"
+rm -fr $HOME/go1.4
+tar -xzf go1.4.3.linux-armv7.tar.gz -C $HOME/go1.4 --strip-components=1
+rm -fr /usr/local/go
+wget https://dl.google.com/go/go1.10.3.src.tar.gz
+tar -xz -C /usr/local -f go1.10.3.src.tar.gz
+rm -fr /usr/local/go
+wget https://dl.google.com/go/go1.10.3.src.tar.gz
+tar -xz -C /usr/local -f go1.10.3.src.tar.gz
+cd /usr/local/go/src
+time GOROOT_BOOTSTRAP=/root/go1.4 ./make.bash
+echo -e "\n- Installation:" go version "abgeschlossen"
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+# and for the `bee` tool:
+export PATH=$PATH:$GOPATH/bin
+#
+# install Beats
+
+
+
 # login as cowrie user to install the software
 echo -e "\n- Konfiguration wurde abgeschlossen!"
 echo -e "\n"

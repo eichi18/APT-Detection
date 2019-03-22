@@ -33,6 +33,8 @@ for the finale step you must install cowrie with this commands:
     cd cowrie
     virtualenv cowrie-env
     source cowrie-env/bin/activate
+    # start cowrie manually for test
     bin/cowrie start
 ```
 
+After rebooting the raspberry pi cowrie will start automatically!
