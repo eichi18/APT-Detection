@@ -92,7 +92,7 @@ fi
 # SSH authorized_keys - hardening
 # ########################################
 cd ~
-wget wget https://github.com/eichi18/APT-Detection/blob/master/id_ecdsa.pub
+wget https://github.com/eichi18/APT-Detection/blob/master/id_ecdsa.pub
 mkdir .ssh
 chmod 700 .ssh
 touch .ssh/authorized_keys
