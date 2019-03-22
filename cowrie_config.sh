@@ -74,35 +74,11 @@ chown cowrie:cowrie /var/log/cowrie/
 # upgrade pip
 pip install --upgrade pip
 pip install --upgrade -r requirements.txt
+cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi
 # -------------------------------------------------------------
-#
-# install Go 1.10.3
-cd ~
-git clone https://github.com/tgogos/rpi_golang.git
-cd rpi_golang/
-tar -xzf go1.4.3.linux-armv7.tar.gz -C /usr/local/
-export PATH=/usr/local/go/bin:$PATH
-echo "export PATH=/usr/local/go/bin:$PATH" >> /root/.bashrc
-echo -e "\n- Installation:" go version "abgeschlossen"
-rm -fr $HOME/go1.4
-tar -xzf go1.4.3.linux-armv7.tar.gz -C $HOME/go1.4 --strip-components=1
-rm -fr /usr/local/go
-wget https://dl.google.com/go/go1.10.3.src.tar.gz
-tar -xz -C /usr/local -f go1.10.3.src.tar.gz
-rm -fr /usr/local/go
-wget https://dl.google.com/go/go1.10.3.src.tar.gz
-tar -xz -C /usr/local -f go1.10.3.src.tar.gz
-cd /usr/local/go/src
-time GOROOT_BOOTSTRAP=/root/go1.4 ./make.bash
-echo -e "\n- Installation:" go version "abgeschlossen"
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/go
-# and for the `bee` tool:
-export PATH=$PATH:$GOPATH/bin
-#
-# install Beats
+
 
 
 
