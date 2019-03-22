@@ -37,8 +37,8 @@ echo " - IP Adresse wird angepasst"
 sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'/g' /etc/dhcpcd.conf
 
 echo 'interface eth1' >> /etc/dhcpcd.conf
-echo 'static ip_address=192.168.1.20'$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
-echo 'static routers=192.168.1.1'$raspi_pubgateway >> /etc/dhcpcd.conf
+echo 'static ip_address='$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
+echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
 echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
 echo -e "\n-fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
 echo -e "\n-fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
