@@ -17,3 +17,12 @@ chmod +x cowrie_config.sh
 ./cowrie_config.sh
 ```
 
+for the finale step you must install cowrie with this commands:
+
+```bash
+    cd cowrie
+    virutalenv cowrie-env
+    source cowrie-env/bin/activate
+    /home/cowrie/install.sh
+```
+
