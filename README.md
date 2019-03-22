@@ -17,6 +17,15 @@ chmod +x cowrie_config.sh
 ./cowrie_config.sh
 ```
 
+3. Step - Reboot the Raspberry Pi
+```bash
+reboot
+```
+
+After the reboot yous must connect to Cowrie with the IP Adresse 10.0.0.20 and you have to use the private SSH Key and as user root!
+
+Last Step - Finale Installation
+
 for the finale step you must install cowrie with this commands:
 
 ```bash
