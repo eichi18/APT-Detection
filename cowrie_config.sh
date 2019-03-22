@@ -34,8 +34,8 @@ sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-cowrie.txt/g' /etc/ssh/sshd
 # update IP Adress
 #
 echo " - IP Adresse wird angepasst"
+cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'/g' /etc/dhcpcd.conf
-
 echo 'interface eth1' >> /etc/dhcpcd.conf
 echo 'static ip_address='$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
 echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
@@ -43,3 +43,38 @@ echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
 echo -e "\n-fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
 echo -e "\n-fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
 echo -e "\n- Konfiguration wurde abgeschlossen!"
+# -------------------------------------------------------------
+# Step 2) change the static ip-address
+# -------------------------------------------------------------
+# ########################################
+#  install cowrie ssh honeypot
+apt-get update
+apt-get install git python-virtualenv libssl-dev libffi-dev build-essential lib$
+# create an user account for cowrie
+sudo adduser --disabled-password --gecos "" cowrie
+echo -e "\n- warte 5 Sekunden"
+sleep 5
+cd /home/cowrie/
+git clone http://github.com/micheloosterhof/cowrie
+#echo 'cd cowrie' >>  /home/cowrie/install.sh
+#echo 'virtualenv cowrie-env' >>  /home/cowrie/install.sh
+#echo 'source cowrie-env/bin/activate' >>  /home/cowrie/install.sh
+echo 'pip install --upgrade pip' >>  /home/cowrie/install.sh
+echo 'pip install --upgrade -r requirements.txt' >>  /home/cowrie/install.sh
+chmod +x /home/cowrie/install.sh
+chown cowrie:cowrie /home/cowrie/*
+apt-get install -y python3-pip
+# login as cowrie user to install the software
+echo -e "\n- Konfiguration wurde abgeschlossen!"
+echo -e "\n"
+echo -e "\n zur finalen Endinstallation sind folgende Befehle erforderlich:"
+echo -e "\n"
+echo -e "\n    cd cowrie"
+echo -e "\n    virutalenv cowrie-env"
+echo -e "\n    source cowrie-env/bin/activate"
+echo -e "\n    /home/cowrie/install.sh"
+echo -e "\n"
+echo -e "\n"
+echo -e "\n danach kann Cowrie gestartet werden "
+echo -e "\n"
+echo -e "\n   bin/cowrie start"
