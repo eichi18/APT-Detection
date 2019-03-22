@@ -92,7 +92,6 @@ fi
 # SSH authorized_keys - hardening
 # ########################################
 cd ~
-wget --http-user=office@eichinger.co.at --http-password=Niu.SdTkdL. https://bitbucket.org/APT-Detection/apt-detection/downloads/id_ecdsa.pub
 mkdir .ssh
 chmod 700 .ssh
 touch .ssh/authorized_keys
