@@ -78,9 +78,19 @@ cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi
 # -------------------------------------------------------------
-
-
-
+cd ~
+git clone https://github.com/eichi18/APT-Detection.git
+mkdir /etc/filebeat
+tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+mkdir /usr/share/filebeat
+mkdir /usr/share/filebeat/bin
+mkdir /var/log/filebeat
+mkdir /var/lib/filebeat
+cp /etc/filebeat/filebeat /usr/share/filebeat/bin/
+chmod 750 /var/log/filebeat
+chmod 750 /etc/filebeat/
+chown -R root:root /usr/share/filebeat/*
+cp -r /etc/filebeat/module /usr/share/filebeat/
 
 # login as cowrie user to install the software
 echo -e "\n- Konfiguration wurde abgeschlossen!"
