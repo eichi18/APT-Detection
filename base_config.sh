@@ -105,12 +105,11 @@ cat .ssh/authorized_keys
 # change default port 22 to 8001 and other paramters
 # ########################################
 sed -i 's/#Port 22/Port 8001/g' /etc/ssh/sshd_config
+sed -i 's/#AddressFamily any/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/g' /etc/ssh/sshd_config
 sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-# noch nicht getestet aber sollte funktionieren
-sed -i 's/#PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
-sed -i 's/#RSAAuthentication yes/RSAAuthentication yes/g' /etc/ssh/sshd_config
+
 service ssh restart
 echo -e "\n- Public SSH Key wurde eingespielt"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
