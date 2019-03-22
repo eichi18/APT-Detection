@@ -104,6 +104,7 @@ cat .ssh/authorized_keys
 # ########################################
 # change default port 22 to 8001 and other paramters
 # ########################################
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 sed -i 's/#Port 22/Port 8001/g' /etc/ssh/sshd_config
 sed -i 's/#AddressFamily any/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/g' /etc/ssh/sshd_config
