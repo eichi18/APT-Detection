@@ -49,16 +49,13 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 # ########################################
 #  install cowrie ssh honeypot
 apt-get update
-apt-get install git python-virtualenv libssl-dev libffi-dev build-essential lib$
+apt-get install git python-virtualenv libssl-dev libffi-dev build-essential libpython-dev python2.7-minimal authbind virtualenv -y
 # create an user account for cowrie
 sudo adduser --disabled-password --gecos "" cowrie
 echo -e "\n- warte 5 Sekunden"
 sleep 5
 cd /home/cowrie/
 git clone http://github.com/micheloosterhof/cowrie
-#echo 'cd cowrie' >>  /home/cowrie/install.sh
-#echo 'virtualenv cowrie-env' >>  /home/cowrie/install.sh
-#echo 'source cowrie-env/bin/activate' >>  /home/cowrie/install.sh
 echo 'pip install --upgrade pip' >>  /home/cowrie/install.sh
 echo 'pip install --upgrade -r requirements.txt' >>  /home/cowrie/install.sh
 chmod +x /home/cowrie/install.sh
