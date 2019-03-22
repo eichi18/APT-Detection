@@ -29,6 +29,7 @@ Last Step - Finale Installation
 for the finale step you must install cowrie with this commands:
 
 ```bash
+    su - cowrie
     cd cowrie
     virutalenv cowrie-env
     source cowrie-env/bin/activate
