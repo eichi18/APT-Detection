@@ -116,5 +116,12 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 
 service ssh restart
 echo -e "\n- Public SSH Key wurde eingespielt"
+# ########################################
+# Supervisor Installation
+# ########################################
+apt-get install supervisor -y
+/etc/init.d/supervisor enable
+/etc/init.d/supervisor start
+echo -e "\n- Supervisor wurde installiert"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
 
