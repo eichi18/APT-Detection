@@ -64,6 +64,19 @@ echo 'pip install --upgrade -r requirements.txt' >>  /home/cowrie/install.sh
 chmod +x /home/cowrie/install.sh
 chown cowrie:cowrie /home/cowrie/*
 apt-get install -y python3-pip
+echo "[program:cowrie]" >> /etc/supervisor/conf.d/cowrie.conf
+echo "command=/home/cowrie/cowrie/bin/cowrie start" >> /etc/supervisor/conf.d/cowrie.conf
+echo "environment=PATH=\"/home/cowrie/cowrie/cowrie-env/bin:%(ENV_PATH)s\"" >> /etc/supervisor/conf.d/cowrie.conf
+echo "user=cowrie" >> /etc/supervisor/conf.d/cowrie.conf
+echo "autostart=true" >> /etc/supervisor/conf.d/cowrie.conf
+echo "autorestart=true" >> /etc/supervisor/conf.d/cowrie.conf
+echo "stopasgroup=true" >> /etc/supervisor/conf.d/cowrie.conf
+echo "killasgroup=true" >> /etc/supervisor/conf.d/cowrie.conf
+echo "stdout_logfile=/var/log/cowrie/cowrie.out.log" >> /etc/supervisor/conf.d/cowrie.conf
+echo "stderr_logfile=/var/log/cowrie/cowrie.err.log" >> /etc/supervisor/conf.d/cowrie.conf
+# create folder for cowrie log-file
+mkdir /var/log/cowrie
+chown cowrie:cowrie /var/log/cowrie/
 # login as cowrie user to install the software
 echo -e "\n- Konfiguration wurde abgeschlossen!"
 echo -e "\n"
