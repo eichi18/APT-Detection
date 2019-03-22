@@ -29,6 +29,9 @@ echo "###############################################"
 echo "Raspberry Pi Grundkonfiguration wird eingerichtet:"
 echo "   Der Vorgang kann mehrere Minuten dauern, bitte um Geduld!"
 echo " "
+echo -e "\n- Updates werden eingespielt"
+apt-get update
+apt-get upbrade -y
 # ########################################
 # richte Zeitzone ein
 echo "Europe/Vienna" > /etc/timezone
