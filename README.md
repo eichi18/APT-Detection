@@ -31,8 +31,8 @@ for the finale step you must install cowrie with this commands:
 ```bash
     su - cowrie
     cd cowrie
-    virutalenv cowrie-env
+    virtualenv cowrie-env
     source cowrie-env/bin/activate
-    /home/cowrie/install.sh
+    bin/cowrie start
 ```
 

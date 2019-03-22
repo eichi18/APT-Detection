@@ -74,6 +74,9 @@ echo "stderr_logfile=/var/log/cowrie/cowrie.err.log" >> /etc/supervisor/conf.d/c
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
 chown cowrie:cowrie /var/log/cowrie/
+# upgrade pip
+pip install --upgrade pip
+pip install --upgrade -r requirements.txt
 # login as cowrie user to install the software
 echo -e "\n- Konfiguration wurde abgeschlossen!"
 echo -e "\n"
@@ -82,7 +85,6 @@ echo -e "\n"
 echo -e "\n    cd cowrie"
 echo -e "\n    virutalenv cowrie-env"
 echo -e "\n    source cowrie-env/bin/activate"
-echo -e "\n    /home/cowrie/install.sh"
 echo -e "\n"
 echo -e "\n"
 echo -e "\n danach kann Cowrie gestartet werden "
