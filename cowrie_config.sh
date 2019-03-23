@@ -70,9 +70,6 @@ echo -e "\n- cowrie.conf für Supervisor wurde angelegt"
 cat /etc/supervisor/conf.d/cowrie.conf
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
-# upgrade pip
-#pip install --upgrade pip
-#pip install --upgrade -r requirements.txt
 cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
 chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
@@ -85,11 +82,13 @@ if [ -f "$file" ];
 then
     # File exist!
     tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    echo -e "\n- Filebeat wurde enpackt und nach /etc/filebeat kopiert"
 else
     # File doese not exist
     cd ~
     git clone https://github.com/eichi18/APT-Detection.git
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C $
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    echo -e "\n- Filebeat wurde von GitHub geladen, enpackt und nach /etc/filebeat kopiert"
 fi
 mkdir /usr/share/filebeat
 mkdir /usr/share/filebeat/bin
