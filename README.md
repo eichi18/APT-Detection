@@ -12,7 +12,7 @@ chmod +x *.sh
 
 2. Step - Cowrie SSH Honeypot Installation
 ```bash
-cd /home/pi/APT-Detection
+cd ~/APT-Detection
 ./cowrie_config.sh
 ```
 
