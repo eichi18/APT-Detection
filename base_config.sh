@@ -31,7 +31,7 @@ echo "   Der Vorgang kann mehrere Minuten dauern, bitte um Geduld!"
 echo " "
 echo -e "\n- Updates werden eingespielt"
 apt-get update
-apt-get upgrade -y
+#apt-get upgrade -y
 # ########################################
 # richte Zeitzone ein
 echo "Europe/Vienna" > /etc/timezone
@@ -95,7 +95,7 @@ fi
 # SSH authorized_keys - hardening
 # ########################################
 cd ~
-wget https://raw.githubusercontent.com/eichi18/APT-Detection/master/id_ecdsa.pub
+cp ./APT-Detection/id_ecdsa.pub ~
 mkdir .ssh
 chmod 700 .ssh
 touch .ssh/authorized_keys
@@ -124,4 +124,3 @@ apt-get install supervisor -y
 /etc/init.d/supervisor start
 echo -e "\n- Supervisor wurde installiert"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
-

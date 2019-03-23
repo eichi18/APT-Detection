@@ -25,8 +25,7 @@ echo " "
 # ########################################
 # edit SSH Banner
 rm /etc/ssh/ssh-banner-cowrie.txt
-cd /etc/ssh/
-wget https://raw.githubusercontent.com/eichi18/APT-Detection/master/ssh-banner-cowrie.txt
+cp ~/APT-Detection/ssh-banner-cowrie.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-cowrie.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-cowrie.txt/g' /etc/ssh/sshd_config
@@ -79,18 +78,18 @@ chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi
 # -------------------------------------------------------------
-cd /home/pi/APT-Detection/
+cd ~/APT-Detection/
 mkdir /etc/filebeat
-file="/home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
+file="~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
 if [ -f "$file" ];
 then
     # File exist!
-    tar -xf /home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
 else
     # File doese not exist
-    cd /home/pi/
+    cd ~
     git clone https://github.com/eichi18/APT-Detection.git
-    tar -xf /home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C $
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C $
 fi
 mkdir /usr/share/filebeat
 mkdir /usr/share/filebeat/bin
@@ -112,7 +111,7 @@ echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -
 echo "Restart=always" >> /lib/systemd/system/filebeat.service
 echo "[Install]" >> /lib/systemd/system/filebeat.service
 echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
-cp /home/pi/APT-Detection/filebeat/filebeat.yml /etc/filebeat/
+cp ~/APT-Detection/filebeat/filebeat.yml /etc/filebeat/
 systemctl enable filebeat.service
 service filebeat start
 sleep 3
@@ -134,3 +133,4 @@ echo -e "\n"
 echo -e "\n danach kann Cowrie gestartet werden "
 echo -e "\n"
 echo -e "\n   bin/cowrie start"
+
