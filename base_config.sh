@@ -123,4 +123,17 @@ apt-get install supervisor -y
 /etc/init.d/supervisor enable
 /etc/init.d/supervisor start
 echo -e "\n- Supervisor wurde installiert"
+# #########################################
+# add SSH Server monitoring to supervisor
+touch /etc/supervisor/conf.d/ssh.conf
+echo "[program:ssh]" >> /etc/supervisor/conf.d/ssh.conf
+echo "command=/etc/init.d/ssh start" >> /etc/supervisor/conf.d/ssh.conf
+echo "user=root" >> /etc/supervisor/conf.d/ssh.conf
+echo "autostart=true" >> /etc/supervisor/conf.d/ssh.conf
+echo "autorestart=true" >> /etc/supervisor/conf.d/ssh.conf
+echo "stopasgroup=true" >> /etc/supervisor/conf.d/ssh.conf
+echo "killasgroup=true" >> /etc/supervisor/conf.d/ssh.conf
+echo "stdout_logfile=/var/log/ssh.out.log" >> /etc/supervisor/conf.d/ssh.conf
+echo "stderr_logfile=/var/log/ssh.err.log" >> /etc/supervisor/conf.d/ssh.conf
+echo -e "\n- SSH Server Überwachung wurde zu Supervisor hinzugefügt"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
