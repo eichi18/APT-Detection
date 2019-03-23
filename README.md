@@ -25,7 +25,7 @@ After the reboot yous must connect to Cowrie with the IP Adresse 10.0.0.20 and y
 
 Last Step - Finale Installation
 
-for the finale step you must install cowrie with this commands:
+for the finale step you must install cowrie once with this commands:
 
 ```bash
     su - cowrie

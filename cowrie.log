@@ -1,0 +1,169 @@
+###############################################
+Installations-Script         Version 2019-01-18
+Copyright Michael Eichinger                2019
+###############################################
+Cowrie Honeypot wird eingerichtet:
+   Der Vorgang kann mehrere Minuten dauern, bitte um Geduld!
+ 
+ - SSH Banner wurde erstellt
+  ____                         _
+ / ___\                       (_)
+/ /     ___  _        _  _ __  _  ___
+| |    / _ \\ \  __  / /| '__\| |/ _ \
+\ \___| (_) |\ \//\\/ / | |   | |  __/
+ \____/\___/  \_/  \_/  |_|   |_|\___|
+   __   __  _   _   _
+  / _\ / _\| | | | | |                                       _
+ ( (  ( (  | |_| | | |__   ___  _ __   ___ _   _ _ __   ___ | |_
+  \ \  \ \ |  _  | | '_ \ / _ \| '_ \ / _ \ | | | '_ \ / _ \| __|
+ __) )__) )| | | | | | | | (_) | | | |  __/ |_| | |_) | (_) | |_
+ \__/ \__/ |_| |_| |_| |_|\___/|_| |_|\___|\__, | .__/ \___/ \__|
+                                            __/ | |
+                                           |___/|_|
+O P E R A T I O N   B L U E   T E A M
+----------------------------------------------------------------
+
+If you landed here by mistake, try not to log in again.
+Any illegal action will be prosecuted!
+
+Have a nice day!
+
+ - IP Adresse wird angepasst
+
+-fixe 192.168.1.40  Management IP Adresse wurde eingerichtet
+
+-fixe 10.0.0.40  LAN IP Adresse wurde eingerichtet
+
+- Konfiguration wurde abgeschlossen!
+OK:1 http://raspbian.raspberrypi.org/raspbian stretch InRelease
+OK:2 http://archive.raspberrypi.org/debian stretch InRelease
+Paketlisten werden gelesen...
+Paketlisten werden gelesen...
+Abhängigkeitsbaum wird aufgebaut....
+Statusinformationen werden eingelesen....
+build-essential ist schon die neueste Version (12.3).
+libpython3-dev ist schon die neueste Version (3.5.3-1).
+libpython3-dev wurde als manuell installiert festgelegt.
+python3-minimal ist schon die neueste Version (3.5.3-1).
+python3-minimal wurde als manuell installiert festgelegt.
+The following additional packages will be installed:
+  libssl-doc libssl1.1 python3-virtualenv virtualenv
+Vorgeschlagene Pakete:
+  git-daemon-run | git-daemon-sysvinit git-doc git-el git-email git-gui gitk
+  gitweb git-arch git-cvs git-mediawiki git-svn
+Die folgenden NEUEN Pakete werden installiert:
+  authbind libffi-dev libssl-dev libssl-doc python-virtualenv
+  python3-virtualenv virtualenv
+Die folgenden Pakete werden aktualisiert (Upgrade):
+  git libssl1.1
+2 aktualisiert, 7 neu installiert, 0 zu entfernen und 220 nicht aktualisiert.
+Es müssen 7.678 kB an Archiven heruntergeladen werden.
+Nach dieser Operation werden 10,6 MB Plattenplatz zusätzlich benutzt.
+Holen:1 http://ftp.tugraz.at/mirror/raspbian/raspbian stretch/main armhf git armhf 1:2.11.0-3+deb9u4 [3.390 kB]
+Holen:3 http://mirror.inode.at/raspbian/raspbian stretch/main armhf authbind armhf 2.1.2 [17,1 kB]
+Holen:4 http://mirror.inode.at/raspbian/raspbian stretch/main armhf libffi-dev armhf 3.2.1-6 [159 kB]
+Holen:2 http://ftp.tugraz.at/mirror/raspbian/raspbian stretch/main armhf libssl1.1 armhf 1.1.0j-1~deb9u1 [1.115 kB]
+Holen:5 http://ftp.tugraz.at/mirror/raspbian/raspbian stretch/main armhf libssl-dev armhf 1.1.0j-1~deb9u1 [1.383 kB]
+Holen:7 http://mirror.inode.at/raspbian/raspbian stretch/main armhf python-virtualenv all 15.1.0+ds-1 [61,1 kB]
+Holen:8 http://mirror.inode.at/raspbian/raspbian stretch/main armhf python3-virtualenv all 15.1.0+ds-1 [57,7 kB]
+Holen:6 http://ftp.tugraz.at/mirror/raspbian/raspbian stretch/main armhf libssl-doc all 1.1.0j-1~deb9u1 [1.476 kB]
+Holen:9 http://mirror.inode.at/raspbian/raspbian stretch/main armhf virtualenv all 15.1.0+ds-1 [19,7 kB]
+apt-listchanges: Lese Changelogs...
+Vorkonfiguration der Pakete ...
+Es wurden 7.678 kB in 2 s geholt (3.280 kB/s).
+(Lese Datenbank ... (Lese Datenbank ... 5%(Lese Datenbank ... 10%(Lese Datenbank ... 15%(Lese Datenbank ... 20%(Lese Datenbank ... 25%(Lese Datenbank ... 30%(Lese Datenbank ... 35%(Lese Datenbank ... 40%(Lese Datenbank ... 45%(Lese Datenbank ... 50%(Lese Datenbank ... 55%(Lese Datenbank ... 60%(Lese Datenbank ... 65%(Lese Datenbank ... 70%(Lese Datenbank ... 75%(Lese Datenbank ... 80%(Lese Datenbank ... 85%(Lese Datenbank ... 90%(Lese Datenbank ... 95%(Lese Datenbank ... 100%(Lese Datenbank ... 115586 Dateien und Verzeichnisse sind derzeit installiert.)
+Vorbereitung zum Entpacken von .../0-git_1%3a2.11.0-3+deb9u4_armhf.deb ...
+Entpacken von git (1:2.11.0-3+deb9u4) über (1:2.11.0-3+deb9u3) ...
+Vorbereitung zum Entpacken von .../1-libssl1.1_1.1.0j-1~deb9u1_armhf.deb ...
+Entpacken von libssl1.1:armhf (1.1.0j-1~deb9u1) über (1.1.0f-3+deb9u2) ...
+Vormals nicht ausgewähltes Paket authbind wird gewählt.
+Vorbereitung zum Entpacken von .../2-authbind_2.1.2_armhf.deb ...
+Entpacken von authbind (2.1.2) ...
+Vormals nicht ausgewähltes Paket libffi-dev:armhf wird gewählt.
+Vorbereitung zum Entpacken von .../3-libffi-dev_3.2.1-6_armhf.deb ...
+Entpacken von libffi-dev:armhf (3.2.1-6) ...
+Vormals nicht ausgewähltes Paket libssl-dev:armhf wird gewählt.
+Vorbereitung zum Entpacken von .../4-libssl-dev_1.1.0j-1~deb9u1_armhf.deb ...
+Entpacken von libssl-dev:armhf (1.1.0j-1~deb9u1) ...
+Vormals nicht ausgewähltes Paket libssl-doc wird gewählt.
+Vorbereitung zum Entpacken von .../5-libssl-doc_1.1.0j-1~deb9u1_all.deb ...
+Entpacken von libssl-doc (1.1.0j-1~deb9u1) ...
+Vormals nicht ausgewähltes Paket python-virtualenv wird gewählt.
+Vorbereitung zum Entpacken von .../6-python-virtualenv_15.1.0+ds-1_all.deb ...
+Entpacken von python-virtualenv (15.1.0+ds-1) ...
+Vormals nicht ausgewähltes Paket python3-virtualenv wird gewählt.
+Vorbereitung zum Entpacken von .../7-python3-virtualenv_15.1.0+ds-1_all.deb ...
+Entpacken von python3-virtualenv (15.1.0+ds-1) ...
+Vormals nicht ausgewähltes Paket virtualenv wird gewählt.
+Vorbereitung zum Entpacken von .../8-virtualenv_15.1.0+ds-1_all.deb ...
+Entpacken von virtualenv (15.1.0+ds-1) ...
+Trigger für install-info (6.3.0.dfsg.1-1+b1) werden verarbeitet ...
+libffi-dev:armhf (3.2.1-6) wird eingerichtet ...
+authbind (2.1.2) wird eingerichtet ...
+Trigger für libc-bin (2.24-11+deb9u3) werden verarbeitet ...
+libssl1.1:armhf (1.1.0j-1~deb9u1) wird eingerichtet ...
+python3-virtualenv (15.1.0+ds-1) wird eingerichtet ...
+python-virtualenv (15.1.0+ds-1) wird eingerichtet ...
+Trigger für man-db (2.7.6.1-2) werden verarbeitet ...
+libssl-doc (1.1.0j-1~deb9u1) wird eingerichtet ...
+virtualenv (15.1.0+ds-1) wird eingerichtet ...
+git (1:2.11.0-3+deb9u4) wird eingerichtet ...
+libssl-dev:armhf (1.1.0j-1~deb9u1) wird eingerichtet ...
+Trigger für libc-bin (2.24-11+deb9u3) werden verarbeitet ...
+Lege Benutzer »cowrie« an ...
+Lege neue Gruppe »cowrie« (1001) an ...
+Lege neuen Benutzer »cowrie« (1001) mit Gruppe »cowrie« an ...
+Erstelle Home-Verzeichnis »/home/cowrie« ...
+Kopiere Dateien aus »/etc/skel« ...
+
+- warte 5 Sekunden
+Paketlisten werden gelesen...
+Abhängigkeitsbaum wird aufgebaut....
+Statusinformationen werden eingelesen....
+python3-pip ist schon die neueste Version (9.0.1-2+rpt2).
+0 aktualisiert, 0 neu installiert, 0 zu entfernen und 220 nicht aktualisiert.
+● filebeat.service - filebeat
+   Loaded: loaded (/lib/systemd/system/filebeat.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Sat 2019-03-23 15:59:20 CET; 1s ago
+     Docs: https://www.elastic.co/guide/en/beats/filebeat/current/index.html
+  Process: 11143 ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat (code=exited, status=203/EXEC)
+ Main PID: 11143 (code=exited, status=203/EXEC)
+
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Unit entered failed state.
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Failed with result 'exit-code'.
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Service hold-off time over, scheduling restart.
+Mär 23 15:59:20 raspberrypi systemd[1]: Stopped filebeat.
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Start request repeated too quickly.
+Mär 23 15:59:20 raspberrypi systemd[1]: Failed to start filebeat.
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Unit entered failed state.
+Mär 23 15:59:20 raspberrypi systemd[1]: filebeat.service: Failed with result 'exit-code'.
+Paketlisten werden gelesen...
+Abhängigkeitsbaum wird aufgebaut....
+Statusinformationen werden eingelesen....
+0 aktualisiert, 0 neu installiert, 0 zu entfernen und 220 nicht aktualisiert.
+
+- Konfiguration wurde abgeschlossen!
+
+
+
+ zur finalen Endinstallation sind folgende Befehle erforderlich:
+
+
+
+    cd cowrie
+
+    virutalenv --python=python3 cowrie-env
+
+    source cowrie-env/bin/activate
+
+    pip install --upgrade pip
+
+    pip install --upgrade -r requirements.txt
+
+
+
+ danach kann Cowrie gestartet werden 
+
+
+
+   bin/cowrie start
