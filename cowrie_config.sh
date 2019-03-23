@@ -72,6 +72,7 @@ cat /etc/supervisor/conf.d/cowrie.conf
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
 cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
+cp ~/APT-Detection/cowrie/cowrie /home/cowrie/cowrie/bin/
 chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi

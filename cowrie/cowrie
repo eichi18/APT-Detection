@@ -1,0 +1,237 @@
+#!/bin/bash
+
+# To override the default virtual enviroment, either set COWRIE_VIRTUAL_ENV or
+# activate it before starting Cowrie
+#COWRIE_VIRTUAL_ENV=my-env
+
+#Change the below to -n to disable daemonizing (for instance when using supervisor)
+DAEMONIZE="-n"
+
+# Log to stdout instead of a separate file (same behaviour as Docker)
+# STDOUT="no"
+
+################################################################################
+## don't modify below here ##
+################################################################################
+
+# The default Python virtual environment is "cowrie-env". If you set the variable
+# COWRIE_VIRTUAL_ENV you can override this
+DEFAULT_VIRTUAL_ENV=cowrie-env
+
+first_time_use() {
+    echo
+    echo "Join the Cowrie community at: http://bit.ly/cowrieslack"
+    echo
+}
+
+migrate_userdb() {
+    if [ -f ${COWRIEDIR}/data/userdb.txt ]; then
+        echo "Migrating ${COWRIEDIR}/data/userdb.txt to ${COWRIEDIR}/etc/userdb.txt"
+        mv -f ${COWRIEDIR}/data/userdb.txt ${COWRIEDIR}/etc/userdb.txt
+    fi
+}
+
+find_cowrie_directory() {
+    # Determine Cowrie directory
+    if [[ "$0" = /* ]]
+    then
+        COWRIEDIR=$(dirname $0)/..
+    else
+        COWRIEDIR=$(dirname $PWD/$0)/..
+    fi
+    COWRIEDIR=$(cd ${COWRIEDIR} && pwd -P 2>/dev/null || pwd)
+}
+
+activate_venv() {
+    # Activate Python virtual environment
+    VENV="$1"
+    if [ ! -f "$VENV/bin/activate" ]
+    then
+        return 1
+    fi
+    . $VENV/bin/activate
+    return 0
+}
+
+cowrie_status() {
+    # Print status
+    PID=$(cat ${PIDFILE} 2>/dev/null || echo "")
+    if [ -n "$PID" ]; then
+        if ps -p "$PID" 2>&1 >/dev/null; then
+            echo "cowrie is running (PID: ${PID})."
+        else
+            echo "cowrie is not running (PID: ${PID})."
+            echo "Removing stale PID file ${PIDFILE}"
+            rm -f ${PIDFILE}
+        fi
+    else
+        echo "cowrie is not running."
+    fi
+}
+
+cowrie_start() {
+    # Start Cowrie
+    COWRIEARGS="$*"
+    TWISTEDARGS="${DAEMONIZE} ${XARGS} --umask=0022 --pidfile=${PIDFILE}"
+
+    # For Docker log to stdout, for non-Docker log to file
+    if [ "$STDOUT" = "yes" ]; then
+        TWISTEDARGS="${TWISTEDARGS} -l -"
+    else
+        TWISTEDARGS="${TWISTEDARGS} --logger cowrie.python.logfile.logger"
+    fi
+
+    # 1. Check if any virtual environment is active
+    # 2. Try COWRIE_VIRTUAL_ENV if defined
+    # 3. Try DEFAULT_VIRTUAL_ENV
+    # 4. Try ../DEFAULT_VIRTUAL_ENV
+    # 5. Try without virtual environment
+
+    if [ ! -z "$VIRTUAL_ENV" ]; then
+        echo 2>&1 "Using activated Python virtual environment \"$VIRTUAL_ENV\""
+    elif activate_venv "$COWRIE_VIRTUAL_ENV"; then
+        echo 2>&1 "Using custom Python virtual environment \"$VIRTUAL_ENV\""
+    elif activate_venv "$DEFAULT_VIRTUAL_ENV"; then
+        echo 2>&1 "Using default Python virtual environment \"$VIRTUAL_ENV\""
+    # Look one directory higher for the virtual env to not pollute the Cowrie dir
+    elif activate_venv "../$DEFAULT_VIRTUAL_ENV"; then
+        echo 2>&1 "Using default Python virtual environment \"$VIRTUAL_ENV\""
+    else
+        echo 2>&1 "Not using Python virtual environment"
+    fi
+
+    #Automatically check if the authbind is enabled or not
+    #if in the folder /etc/authbind/byport the file exist
+    authfile="/etc/authbind/byport/22"
+    if [ -f "$authfile" ]; then
+        echo -e "AUTHBIND_ENABLED=yes" $authfile
+        AUTHBIND_ENABLED=yes
+    else
+        echo -e "AUTHBIND_ENABLED=no" $authfile
+        AUTHBIND_ENABLED=no
+    fi
+    authfile="/etc/authbind/byport/23"
+    if [ -f "$authfile" ]; then
+        echo -e "AUTHBIND_ENABLED=yes" $authfile
+        AUTHBIND_ENABLED=yes
+    else
+        echo -e "AUTHBIND_ENABLED=no" $authfile
+        AUTHBIND_ENABLED=no
+    fi
+
+    echo "Starting cowrie: [twistd ${TWISTEDARGS} cowrie ${COWRIEARGS}]..."
+    if [ "$AUTHBIND_ENABLED" = "no" ]
+    then
+        exec twistd ${TWISTEDARGS} ${COWRIEARGS} cowrie
+    else
+        exec authbind --deep twistd ${TWISTEDARGS} ${COWRIEARGS} cowrie
+    fi
+}
+
+cowrie_stop () {
+    # Stop Cowrie
+    PID=$(cat ${PIDFILE} 2>/dev/null || echo "")
+    if [ -n "$PID" ]; then
+      echo "Stopping cowrie..."
+      if kill -TERM $PID; then
+          echo -n
+      else
+          echo "Removing stale PID file ${PIDFILE}"
+          rm -f ${PIDFILE}
+      fi
+    else
+        echo "cowrie is not running."
+    fi
+}
+
+cowrie_force_stop () {
+    # Force Stop Cowrie
+    PID=$(cat ${PIDFILE} 2>/dev/null || echo -n "")
+    if [ -n "$PID" ]; then
+        echo -n "Stopping cowrie..."
+        if kill -TERM $PID; then
+            ((t = 60))
+            while ((t > 1)); do
+                sleep 1
+                echo -n .
+                if kill -0 $PID 2>/dev/null; then
+                    ((t -= 1))
+                else
+                    echo "terminated."
+                    return
+                fi
+            done
+            kill -KILL $PID
+            echo "killed."
+        else
+            echo "Removing stale PID file ${PIDFILE}"
+            rm -f ${PIDFILE}
+        fi
+    else
+        echo "cowrie is not running."
+    fi
+}
+
+cowrie_usage() {
+    echo "usage: $0 <start|stop|force-stop|restart|status>"
+}
+
+################################################################################
+## Main script
+################################################################################
+
+if [ "$#" = 0 ]
+then
+    cowrie_usage
+    exit 1
+fi
+
+find_cowrie_directory $0
+cd ${COWRIEDIR}
+export PYTHONPATH=${PYTHONPATH}:${COWRIEDIR}/src
+
+# This is for the move to src/ on 2018-07-21
+# It deletes old compiled python code
+# Can be removed at some time in the future
+for dir in ${COWRIEDIR}/twisted ${COWRIEDIR}/cowrie; do
+    [ -d ${dir} ] && find ${dir} -name '*pyc' | xargs rm -f
+done
+
+# Don't store pidfile on Docker persistent volume
+if [ "$STDOUT" = "yes" ]; then
+        PIDFILE=""
+else
+        PIDFILE=var/run/cowrie.pid
+fi
+set -e
+
+if [ ! -f ${COWRIEDIR}/var/log/cowrie/cowrie.log ]
+then
+    first_time_use
+fi
+
+key=$1
+shift 1
+case $key in
+    stop)
+        cowrie_stop $*
+        ;;
+    force-stop)
+        cowrie_force_stop $*
+        ;;
+    start)
+        migrate_userdb
+        cowrie_start $*
+        ;;
+    restart)
+        cowrie_stop $*
+        cowrie_start $*
+        ;;
+    status)
+        cowrie_status $*
+        ;;
+    *)
+        cowrie_usage
+        exit 1
+        ;;
+esac
