@@ -1,0 +1,23 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /home/cowrie/cowrie/var/log/cowrie/cowrie.json
+  json.keys_under_root: true
+  json.add_error_key: true
+  json.message_key: log
+  document_type: cowrie
+
+filebeat.config.modules:
+# Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+# Set to true to enable config reloading
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 3
+
+#----------------------------- Logstash output --------------------------------
+output.logstash:
+  hosts: ["10.0.0.10:5044"] # Whatever your ELK host is
+  index: cowrie
+

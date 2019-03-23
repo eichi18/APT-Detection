@@ -30,8 +30,10 @@ for the finale step you must install cowrie once with this commands:
 ```bash
     su - cowrie
     cd cowrie
-    virtualenv cowrie-env
+    virtualenv --python=python3 cowrie-env
     source cowrie-env/bin/activate
+    pip install --upgrade pip
+    pip install --upgrade -r requirements.txt
     # start cowrie manually for test
     bin/cowrie start
 ```
