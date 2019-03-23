@@ -31,7 +31,7 @@ echo "   Der Vorgang kann mehrere Minuten dauern, bitte um Geduld!"
 echo " "
 echo -e "\n- Updates werden eingespielt"
 apt-get update
-apt-get upbrade -y
+apt-get upgrade -y
 # ########################################
 # richte Zeitzone ein
 echo "Europe/Vienna" > /etc/timezone

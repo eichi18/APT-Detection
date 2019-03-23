@@ -8,8 +8,8 @@ fi
 # ########################################
 # set parameter for this honeypot
 #
-raspi_ip="10.0.0.20" # this ist the first honeypot
-raspi_pubip="192.168.1.20"
+raspi_ip="10.0.0.40" # this ist the first honeypot
+raspi_pubip="192.168.1.40"
 raspi_net_mask="24"
 raspi_pubnet_mask="24"
 raspi_gateway="10.0.0.1"
@@ -78,10 +78,19 @@ cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi
 # -------------------------------------------------------------
-cd ~
-git clone https://github.com/eichi18/APT-Detection.git
+cd /home/pi/APT-Detection/
 mkdir /etc/filebeat
-tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+file="/home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
+if [ -f "$file" ];
+then
+    # File exist!
+    tar -xf /home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+else
+    # File doese not exist
+    cd /home/pi/
+    git clone https://github.com/eichi18/APT-Detection.git
+    tar -xf /home/pi/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C $
+fi
 mkdir /usr/share/filebeat
 mkdir /usr/share/filebeat/bin
 mkdir /var/log/filebeat
@@ -94,7 +103,7 @@ cp -r /etc/filebeat/module /usr/share/filebeat/
 # automatically start of filebeat
 echo "[Unit]" >> /lib/systemd/system/filebeat.service
 echo "Description=filebeat" >> /lib/systemd/system/filebeat.service
-echo "Documentati-on=https://www.elastic.co/guide/en/beats/filebeat/current/index.html" >> /lib/systemd/system/filebeat.service
+echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/index.html" >> /lib/systemd/system/filebeat.service
 echo "Wants=userwork-online.target" >> /lib/systemd/system/filebeat.service
 echo "After=network-online.target" >> /lib/systemd/system/filebeat.service
 echo "[Service]" >> /lib/systemd/system/filebeat.service
@@ -102,9 +111,13 @@ echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -
 echo "Restart=always" >> /lib/systemd/system/filebeat.service
 echo "[Install]" >> /lib/systemd/system/filebeat.service
 echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
+cp /home/pi/APT-Detection/filebeat/filebeat.yml /etc/filebeat/
 systemctl enable filebeat.service
 service filebeat start
+sleep 3
 service filebeat status
+# finish
+apt autoremove -y
 
 # login as cowrie user to install the software
 echo -e "\n- Konfiguration wurde abgeschlossen!"

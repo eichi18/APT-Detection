@@ -4,16 +4,15 @@
 1. Step - Base Installation
 ```bash
 cd ~
-wget https://raw.githubusercontent.com/eichi18/APT-Detection/master/base_config.sh
-chmod +x base_config.sh
+git clone https://github.com/eichi18/APT-Detection.git
+cd APT-Detection
+chmod +x *.sh
 ./base_config.sh
 ```
 
 2. Step - Cowrie SSH Honeypot Installation
 ```bash
-cd ~
-wget https://raw.githubusercontent.com/eichi18/APT-Detection/master/cowrie_config.sh
-chmod +x cowrie_config.sh
+cd /home/pi/APT-Detection
 ./cowrie_config.sh
 ```
 
