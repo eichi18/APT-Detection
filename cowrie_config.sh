@@ -29,7 +29,7 @@ cp ~/APT-Detection/ssh-banner-cowrie.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-cowrie.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-cowrie.txt/g' /etc/ssh/sshd_config
-sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_pubip'/g' /etc/ssh/sshd_config
+sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_config
 # ########################################
 # update IP Adress
 #
@@ -42,14 +42,14 @@ echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
 echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
 echo -e "\n- fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
 echo -e "\n- fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
-echo -e "\n- Konfiguration wurde abgeschlossen!"
+echo -e "\n- IP Adressen wurden geändert"
 # -------------------------------------------------------------
 # Step 2) install cowrie 
 # -------------------------------------------------------------
 # ########################################
 #  install cowrie ssh honeypot
 apt-get update
-apt-get install git python-virtualenv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind -y
+apt-get install python-virtualenv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind -y
 # create an user account for cowrie
 sudo adduser --disabled-password --gecos "" cowrie
 echo -e "\n- warte 5 Sekunden"
@@ -71,7 +71,13 @@ echo -e "\n- cowrie.conf für Supervisor wurde angelegt"
 cat /etc/supervisor/conf.d/cowrie.conf
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
-cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
+cp /root/APT-Detection/cowrie/cowrie.cfg /home/cowrie/cowrie/etc/
+# comment out this section - we don't need kafka
+sed -i 's/[output_kafka]/#[output_kafka]/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
+sed -i 's/enabled = false/#enabled = false/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
+sed -i 's/host = 127.0.0.1/#host = 127.0.0.1/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
+sed -i 's/port = 9092/#port = 9092/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
+sed -i 's/topic = cowrie/#topic = cowrie/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
 cp ~/APT-Detection/cowrie/cowrie /home/cowrie/cowrie/bin/
 chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
@@ -79,7 +85,7 @@ chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
 cd ~/APT-Detection/
 mkdir /etc/filebeat
-file="~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
+file="/root/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
 if [ -f "$file" ];
 then
     # File exist!
