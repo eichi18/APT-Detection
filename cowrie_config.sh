@@ -29,6 +29,7 @@ cp ~/APT-Detection/ssh-banner-cowrie.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-cowrie.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-cowrie.txt/g' /etc/ssh/sshd_config
+sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_pubip'/g' /etc/ssh/sshd_config
 # ########################################
 # update IP Adress
 #

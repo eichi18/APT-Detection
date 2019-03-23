@@ -39,3 +39,5 @@ for the finale step you must install cowrie once with this commands:
 ```
 
 After rebooting the raspberry pi cowrie will start automatically!
+
+For more information please visit this link: https://cowrie.readthedocs.io/en/latest/INSTALL.html
