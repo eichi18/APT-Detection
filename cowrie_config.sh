@@ -49,13 +49,14 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 # ########################################
 #  install cowrie ssh honeypot
 apt-get update
-apt-get install git python-virtualenv libssl-dev libffi-dev build-essential libpython-dev python2.7-minimal authbind virtualenv -y
+apt-get install git python-virtualenv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind -y
 # create an user account for cowrie
 sudo adduser --disabled-password --gecos "" cowrie
 echo -e "\n- warte 5 Sekunden"
 sleep 5
 cd /home/cowrie/
-git clone http://github.com/micheloosterhof/cowrie
+#git clone http://github.com/micheloosterhof/cowrie
+git clone http://github.com/cowrie/cowrie
 chown cowrie:cowrie -R /home/cowrie/cowrie/
 apt-get install -y python3-pip
 echo "[program:cowrie]" >> /etc/supervisor/conf.d/cowrie.conf
@@ -71,8 +72,8 @@ echo "stderr_logfile=/var/log/cowrie/cowrie.err.log" >> /etc/supervisor/conf.d/c
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
 # upgrade pip
-pip install --upgrade pip
-pip install --upgrade -r requirements.txt
+#pip install --upgrade pip
+#pip install --upgrade -r requirements.txt
 cp /home/cowrie/cowrie/etc/cowrie.cfg.dist /home/cowrie/cowrie/etc/cowrie.cfg
 chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
@@ -125,9 +126,10 @@ echo -e "\n"
 echo -e "\n zur finalen Endinstallation sind folgende Befehle erforderlich:"
 echo -e "\n"
 echo -e "\n    cd cowrie"
-echo -e "\n    virutalenv cowrie-env"
+echo -e "\n    virutalenv --python=python3 cowrie-env"
 echo -e "\n    source cowrie-env/bin/activate"
-echo -e "\n"
+echo -e "\n    pip install --upgrade pip"
+echo -e "\n    pip install --upgrade -r requirements.txt"
 echo -e "\n"
 echo -e "\n danach kann Cowrie gestartet werden "
 echo -e "\n"
