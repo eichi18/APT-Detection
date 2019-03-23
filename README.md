@@ -38,6 +38,6 @@ for the finale step you must install cowrie once with this commands:
     bin/cowrie start
 ```
 
-After rebooting the raspberry pi cowrie will start automatically!
+After rebooting the raspberry pi all services will start automatically! The Cowrie SSH Honeypot is now ready for fine tuning.
 
 For more information please visit this link: https://cowrie.readthedocs.io/en/latest/INSTALL.html
