@@ -137,3 +137,7 @@ echo "stdout_logfile=/var/log/ssh.out.log" >> /etc/supervisor/conf.d/ssh.conf
 echo "stderr_logfile=/var/log/ssh.err.log" >> /etc/supervisor/conf.d/ssh.conf
 echo -e "\n- SSH Server Überwachung wurde zu Supervisor hinzugefügt"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
+echo "------------------------------------------------"
+echo "        Fortsetzen mit Honeypot Installation    "
+echo "------------------------------------------------"
+
