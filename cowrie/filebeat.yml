@@ -1,47 +1,17 @@
-# Source: https://github.com/elastic/beats/blob/master/filebeat/filebeat.yml
-filebeat.inputs:
+filebeat.prospectors:
 - type: log
   enabled: true
   paths:
     - /home/cowrie/cowrie/var/log/cowrie/*.json
-#  json.keys_under_root: true
-#  json.add_error_key: true
+
+  document_type: json
+  json.message_key: log
+
   encoding: plain
-#  json.message_key: log
   fields:
     document_type: cowrie
 
-# for future reason with two honeypots on one raspberry
-#- type: log
-#  paths:
-#    - /opt/dionaea/var/lib/dionaea/dionaea.json*
-#  encoding: plain
-#  fields:
-#    document_type: dionaea
-
-filebeat.config.modules:
-# Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
-# Set to true to enable config reloading
-  reload.enabled: false
-
-setup.template.settings:
-  index.number_of_shards: 3
-
 #----------------------------- Logstash output --------------------------------
 output.logstash:
-  hosts: ["10.0.0.10:5044"] # Whatever your ELK host is
-#  index: cowrie
-
-
-#================================ Logging =====================================
-
-# Sets log level. The default log level is info.
-# Available log levels are: error, warning, info, debug
-logging.level: debug
-
-# At debug level, you can selectively enable logging only for some components.
-# To enable all selectors use ["*"]. Examples of other selectors are "beat",
-# "publish", "service".
-#logging.selectors: ["*"]
+  hosts: ["10.0.0.10:5044"]
 
