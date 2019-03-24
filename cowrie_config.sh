@@ -139,7 +139,7 @@ echo "[Install]" >> /lib/systemd/system/filebeat.service
 echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
 echo -e "\n- Konfiguration für Filebeat wurde erstellt"
 cat /lib/systemd/system/filebeat.service
-cp ~/APT-Detection/filebeat/filebeat.yml /etc/filebeat/
+cp ~/APT-Detection/cowrie/filebeat.yml /etc/filebeat/
 echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service

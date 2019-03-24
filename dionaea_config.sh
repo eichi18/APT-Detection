@@ -90,3 +90,24 @@ chown -R root:root /usr/share/filebeat/*
 cp -r /etc/filebeat/module /usr/share/filebeat/
 echo -e "\n- Filebeat wurde installiert"
 
+# automatically start of filebeat
+echo "[Unit]" >> /lib/systemd/system/filebeat.service
+echo "Description=filebeat" >> /lib/systemd/system/filebeat.service
+echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/index.html" >> /lib/systemd/system/filebeat.service
+echo "Wants=userwork-online.target" >> /lib/systemd/system/filebeat.service
+echo "After=network-online.target" >> /lib/systemd/system/filebeat.service
+echo "[Service]" >> /lib/systemd/system/filebeat.service
+echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat" >> /lib/systemd/system/filebeat.service
+echo "Restart=always" >> /lib/systemd/system/filebeat.service
+echo "[Install]" >> /lib/systemd/system/filebeat.service
+echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
+echo -e "\n- Konfiguration für Filebeat wurde erstellt"
+cat /lib/systemd/system/filebeat.service
+cp ~/APT-Detection/dionaea/filebeat.yml /etc/filebeat/
+echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
+cat /etc/filebeat/filebeat.yml
+systemctl enable filebeat.service
+service filebeat start
+sleep 3
+service filebeat status
+
