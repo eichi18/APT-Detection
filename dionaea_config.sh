@@ -46,6 +46,8 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 # change hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hosts
+echo -e "\n- IP Adressen und Hostname wurden geändert"
+
 # -------------------------------------------------------------
 # Step 2) install dionaea
 # -------------------------------------------------------------
@@ -53,13 +55,15 @@ sed -i 's/raspberrypi/dionaea/g' /etc/hosts
 #  install dionaea honeypot
 echo "deb http://packages.s7t.de/raspbian wheezy main" >> /etc/apt/sources.list
 apt-get update
+# install dependencies
 apt-get install libglib2.0-dev libssl-dev libcurl4-openssl-dev libreadline-dev libsqlite3-dev libtool automake -y
 apt-get install autoconf build-essential subversion git-core flex bison pkg-config libnl-3-dev libnl-genl-3-dev -y
-apt-get install libnl-nf-3-dev libnl-route-3-dev liblcfg libemu libev dionaea-python dionaea-cython libpcap -y
-apt-get install udns dionaea liblcfg -y
+apt-get install libnl-nf-3-dev libnl-route-3-dev liblcfg libemu libev libpcap udns liblcfg -y
+# install dionaea
+apt-get install dionaea-python dionaea-cython dionaea -y  --allow-unauthenticated
 cp /opt/dionaea/etc/dionaea/dionaea.conf.dist /opt/dionaea/etc/dionaea/dionaea.conf
 chown nobody:nogroup /opt/dionaea/var/dionaea -R
-echo -e "\n- IP Adressen wurden geändert"
+echo -e "\n- Dionaea wurde installiert"
 
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi

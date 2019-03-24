@@ -43,10 +43,11 @@ echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
 echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
 echo -e "\n- fixe" $raspi_ip " Management IP Adresse wurde eingerichtet"
 echo -e "\n- fixe" $raspi_pubip " LAN IP Adresse wurde eingerichtet"
-echo -e "\n- IP Adressen wurden geändert"
 # change hostname
 sed -i 's/raspberrypi/cowrie/g' /etc/hostname
 sed -i 's/raspberrypi/cowrie/g' /etc/hosts
+echo -e "\n- IP Adressen und Hostname wurden geändert"
+
 # -------------------------------------------------------------
 # Step 2) install cowrie 
 # -------------------------------------------------------------
