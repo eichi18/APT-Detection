@@ -7,10 +7,6 @@ filebeat.prospectors:
   document_type: json
   json.message_key: log
 
-  encoding: plain
-  fields:
-    document_type: cowrie
-
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   hosts: ["10.0.0.10:5044"]
