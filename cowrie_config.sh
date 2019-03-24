@@ -89,17 +89,17 @@ chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
 cd ~/APT-Detection/
 mkdir /etc/filebeat
-file="/root/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
+file="/root/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz"
 if [ -f "$file" ];
 then
     # File exist!
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
     echo -e "\n- Filebeat wurde enpackt und nach /etc/filebeat kopiert"
 else
     # File doese not exist
     cd ~
     git clone https://github.com/eichi18/APT-Detection.git
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
     echo -e "\n- Filebeat wurde von GitHub geladen, enpackt und nach /etc/filebeat kopiert"
 fi
 mkdir /usr/share/filebeat
