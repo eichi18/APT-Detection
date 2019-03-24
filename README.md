@@ -1,7 +1,7 @@
 # APT-Detection
-## Installing a cowrie SSH honeypot for the APT-Detection System
+## Base Installation for all Raspberry Pi
 
-The Base Installation is for all honeypots the same. This is the basic installation of the Raspberry Pi.
+The base installation is for all honeypots the same. This is the basic installation of the Raspberry Pi.
 ```bash
 cd ~
 git clone https://github.com/eichi18/APT-Detection.git
@@ -9,7 +9,7 @@ cd APT-Detection
 chmod +x *.sh
 ./base_config.sh
 ```
-
+## Installing a cowrie SSH honeypot for the APT-Detection System
 1. Step - Cowrie SSH Honeypot Installation
 ```bash
 cd ~/APT-Detection
