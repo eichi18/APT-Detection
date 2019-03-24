@@ -76,12 +76,9 @@ cat /etc/supervisor/conf.d/cowrie.conf
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
 cp /root/APT-Detection/cowrie/cowrie.cfg /home/cowrie/cowrie/etc/
-# comment out this section - we don't need kafka
-sed -i 's/[output_kafka]/#[output_kafka]/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
-sed -i 's/enabled = false/#enabled = false/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
-sed -i 's/host = 127.0.0.1/#host = 127.0.0.1/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
-sed -i 's/port = 9092/#port = 9092/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
-sed -i 's/topic = cowrie/#topic = cowrie/g' /home/cowrie/cowrie/etc/cowrie.cfg.dist
+# user defined cowrie.cfg.dist - we don't need kafka
+rm /home/cowrie/cowrie/etc/cowrie.cfg.dist
+cp ~/APT-Detection/cowrie/cowrie.cfg.dist /home/cowrie/cowrie/etc/
 cp ~/APT-Detection/cowrie/cowrie /home/cowrie/cowrie/bin/
 chown cowrie:cowrie /var/log/cowrie/
 # -------------------------------------------------------------
