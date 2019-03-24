@@ -1,0 +1,55 @@
+# ElastAlert Rule for Cowrie SSH Honepot
+es_host: 127.0.0.1
+es_port: 9200
+name: Cowrie_Rule
+
+# Type of the alert
+
+type: any
+
+# Index to search in elasticsearch
+index: cowrie
+
+#num_events: 5
+#timeframe:
+#hours: 4
+
+
+filter:
+#    - term:
+#      name_field: "eventid"      
+
+#    - term:
+#      _type: "cowrie.login.success"
+
+    - query:
+         query_string:
+            query: "eventid: cowrie.login.success"
+realert:
+    minutes: 1
+
+# The alert is use when a match is found
+alert:
+    - "email"
+
+alert_subject: "ElastAler: Access to Cowrie"
+alert_subject_args:
+    - "@timestamp"
+    - audit.object.name
+
+alert_text_args:
+    - "@timestamp"
+    - audit.object.name
+
+alert_text: |
+    Access to Cowrie.
+
+email:
+    - "office@eichinger.co.at"
+
+# The alert is use when a match is found
+#alert:
+#    - "command"
+
+#command: ["/opt/sms_alert/sms_alert.py", "-n", "+436643230209", "-t", "{message}"]
+
