@@ -8,8 +8,8 @@ fi
 # ########################################
 # set parameter for this honeypot
 #
-raspi_ip="10.0.0.41" # this ist the first honeypot
-raspi_pubip="192.168.1.41"
+raspi_ip="10.0.0.21" # this ist the first honeypot
+raspi_pubip="192.168.1.21"
 raspi_net_mask="24"
 raspi_pubnet_mask="24"
 raspi_gateway="10.0.0.1"
@@ -29,7 +29,7 @@ cp ~/APT-Detection/ssh-banner-cowrie.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-dionaea.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-dionaea.txt/g' /etc/ssh/sshd_config
-sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_pubip'/g' /etc/ssh/sshd_config
+sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_config
 # ########################################
 # update IP Adress
 #
@@ -40,8 +40,8 @@ echo 'interface eth1' >> /etc/dhcpcd.conf
 echo 'static ip_address='$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
 echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
 echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
-echo -e "\n- fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
-echo -e "\n- fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
+echo -e "\n- fixe" $raspi_ip " Management IP Adresse wurde eingerichtet"
+echo -e "\n- fixe" $raspi_pubip " LAN IP Adresse wurde eingerichtet"
 echo -e "\n- Konfiguration wurde abgeschlossen!"
 # change hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hostname
@@ -66,17 +66,17 @@ echo -e "\n- IP Adressen wurden geändert"
 # -------------------------------------------------------------
 cd ~/APT-Detection/
 mkdir /etc/filebeat
-file="/root/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz"
+file="/root/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz"
 if [ -f "$file" ];
 then
     # File exist!
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
     echo -e "\n- Filebeat wurde enpackt und nach /etc/filebeat kopiert"
 else
     # File doese not exist
     cd ~
     git clone https://github.com/eichi18/APT-Detection.git
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.6.0-linux-x86.tar.gz -C /etc/filebeat
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
     echo -e "\n- Filebeat wurde von GitHub geladen, enpackt und nach /etc/filebeat kopiert"
 fi
 mkdir /usr/share/filebeat
@@ -104,7 +104,7 @@ echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
 echo -e "\n- Konfiguration für Filebeat wurde erstellt"
 cat /lib/systemd/system/filebeat.service
 cp ~/APT-Detection/dionaea/filebeat.yml /etc/filebeat/
-echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration für Filebeat Dionaea LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start
