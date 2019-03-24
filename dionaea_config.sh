@@ -43,6 +43,9 @@ echo 'static domain_name_servers='$raspi_dns >> /etc/dhcpcd.conf
 echo -e "\n- fixe" $raspi_pubip " Management IP Adresse wurde eingerichtet"
 echo -e "\n- fixe" $raspi_ip " LAN IP Adresse wurde eingerichtet"
 echo -e "\n- Konfiguration wurde abgeschlossen!"
+# change hostname
+sed -i 's/raspberrypi/dionaea/g' /etc/hostname
+sed -i 's/raspberrypi/dionaea/g' /etc/hosts
 # -------------------------------------------------------------
 # Step 2) install dionaea
 # -------------------------------------------------------------
