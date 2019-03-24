@@ -1,7 +1,7 @@
 # APT-Detection
 ## Installing a cowrie SSH honeypot for the APT-Detection System
 
-1. Step - Base Installation
+The Base Installation is for all honeypots the same. This is the basic installation of the Raspberry Pi.
 ```bash
 cd ~
 git clone https://github.com/eichi18/APT-Detection.git
@@ -10,13 +10,13 @@ chmod +x *.sh
 ./base_config.sh
 ```
 
-2. Step - Cowrie SSH Honeypot Installation
+1. Step - Cowrie SSH Honeypot Installation
 ```bash
 cd ~/APT-Detection
 ./cowrie_config.sh
 ```
 
-3. Step - Reboot the Raspberry Pi
+2. Step - Reboot the Raspberry Pi
 ```bash
 reboot
 ```
@@ -41,3 +41,13 @@ for the finale step you must install cowrie once with this commands:
 After rebooting the raspberry pi all services will start automatically! The Cowrie SSH Honeypot is now ready for fine tuning.
 
 For more information please visit this link: https://cowrie.readthedocs.io/en/latest/INSTALL.html
+
+## Installing a dionaea Honeypot for the APT-Detection System
+
+1. Step Dionaea Honeypot Installation
+´´´bash
+cd ~/APT-Detection
+./dionaea_config.sh
+´´´ 
+
+
