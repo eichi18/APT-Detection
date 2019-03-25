@@ -73,7 +73,7 @@ sudo make install
 cp /opt/dionaea/etc/dionaea/dionaea.cfg /opt/dionaea/etc/dionaea/dionaea.cfg.dist
 echo -e "\n- Dionaea wurde installiert"
 # install ntp service
-apt-get install ntp
+apt-get install ntp -y
 # starting as service
 cp /root/APT-Detection/dionaea/etc/init.d/dionaea /etc/init.d/
 chmod 755 /etc/init.d/dionaea
