@@ -52,18 +52,33 @@ echo -e "\n- IP Adressen und Hostname wurden geändert"
 # Step 2) install dionaea
 # -------------------------------------------------------------
 # ########################################
-#  install dionaea honeypot
-echo "deb http://packages.s7t.de/raspbian wheezy main" >> /etc/apt/sources.list
-apt-get update
-# install dependencies
-apt-get install libglib2.0-dev libssl-dev libcurl4-openssl-dev libreadline-dev libsqlite3-dev libtool automake -y
-apt-get install autoconf build-essential subversion git-core flex bison pkg-config libnl-3-dev libnl-genl-3-dev -y
-apt-get install libnl-nf-3-dev libnl-route-3-dev liblcfg libemu libev libpcap udns liblcfg -y
-# install dionaea
-apt-get install dionaea-python dionaea-cython dionaea -y  --allow-unauthenticated
-cp /opt/dionaea/etc/dionaea/dionaea.conf.dist /opt/dionaea/etc/dionaea/dionaea.conf
-chown nobody:nogroup /opt/dionaea/var/dionaea -R
+#
+# source: https://dionaea.readthedocs.io/en/latest/installation.html
+# downloading source code of dionaea
+cd ~
+git clone https://github.com/DinoTools/dionaea.git
+cd  dionaea
+# install required build dependencies before configuring and building dionaea
+apt-get install build-essential cmake check cython3 libcurl4-openssl-dev libemu-dev libev-dev -y
+apt-get install libglib2.0-dev libloudmouth1-dev libnetfilter-queue-dev libnl-3-dev libpcap-dev -y
+apt-get install libssl-dev libtool libudns-dev python3 python3-dev python3-bson python3-yaml -y
+apt-get install python3-boto3 ttf-liberation -y
+# create a build dictory and run cmake to setup the build process
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/dionaea ..
+# run make to build and run make install to install the honeypot
+make
+sudo make install
+cp /opt/dionaea/etc/dionaea/dionaea.cfg /opt/dionaea/etc/dionaea/dionaea.cfg.dist
 echo -e "\n- Dionaea wurde installiert"
+# install ntp service
+apt-get install ntp
+# starting as service
+cp /root/APT-Detection/dionaea/etc/init.d/dionaea /etc/init.d/
+chmod 755 /etc/init.d/dionaea
+update-rc.d dionaea defaults
+/etc/init.d/dionaea start
 
 # -------------------------------------------------------------
 # Step 3) install Filebeat for Raspberry Pi
