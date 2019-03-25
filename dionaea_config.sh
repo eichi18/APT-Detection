@@ -25,7 +25,7 @@ echo " "
 # ########################################
 # edit SSH Banner
 rm /etc/ssh/ssh-banner-cowrie.txt
-cp ~/APT-Detection/ssh-banner-cowrie.txt /etc/ssh/
+cp ~/APT-Detection/ssh-banner-dionaea.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-dionaea.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-dionaea.txt/g' /etc/ssh/sshd_config
