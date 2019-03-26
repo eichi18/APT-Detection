@@ -2,13 +2,13 @@
 clear
 # -------------------------------------------------------------
 # Michael Eichinger, BSc
-# Release: v 0.3
-# Date: 09.01.20198
+# Release: v 1.0
+# Date: 26.03.2019
 # Email: office@eichinger.co.at
 # NOTE: installation script
 # Startin position is Raspberry Pi 2 or 3 with brand new
 # installation
-# Image: Stretch 27.06.2018
+# Image: Stretch 13.11.2018
 # -------------------------------------------------------------
 # Step 1) base configuration
 # -------------------------------------------------------------
@@ -17,13 +17,13 @@ if [ $(id -u) -ne 0 ]; then
   exit 1
 fi
 # ########################################
-# set parameter for this honeypot
+# set parameter for this raspberry pi
 raspi_ip="10.0.0.30"
 raspi_net_mask="24"
 raspi_gateway="10.0.0.1"
 raspi_dns='208.67.222.222 208.67.220.220'
 echo "###############################################"
-echo "Installations-Script         Version 2018-01-10"
+echo "Installations-Script         Version 2019-03-26"
 echo "Copyright Michael Eichinger                2019"
 echo "###############################################"
 echo "Raspberry Pi Grundkonfiguration wird eingerichtet:"
@@ -33,12 +33,12 @@ echo -e "\n- Updates werden eingespielt"
 apt-get update
 apt-get upgrade -y
 # ########################################
-# richte Zeitzone ein
+# set up time zone
 echo "Europe/Vienna" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata > /dev/null 2> /dev/null
 date +%Z | egrep -q "^CE(S){0,1}T$" > /dev/null 2> /dev/null && echo "- Zeitzone wurde eingerichtet." || echo "FEHLER: Zeitzone konnte nicht eingerichtet werden!"
 # ########################################
-# aktualisiere Systemzeit
+# current system time
 # https://wiki.archlinux.org/index.php/Systemd-timesyncd
 echo "------------------------------------------------"
 echo "        aktuelle Zeit:"
@@ -47,20 +47,20 @@ timedatectl status
 echo "------------------------------------------------"
 #
 # ########################################
-# richte Sprache ein
+# set language
 #sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 sed -i 's/# de_AT.UTF-8 UTF-8/de_AT.UTF-8 UTF-8/g' /etc/locale.gen
 locale-gen > /dev/null 2> /dev/null
 update-locale LANG=de_AT.UTF-8 LANGUAGE=de_AT:de > /dev/null 2> /dev/null && echo "- Sprache wurde eingerichtet." || echo "FEHLER: Sprache konnte nicht eingerichtet werden!"
 # ########################################
-# richte Tastaturlayout ein (Danke an https://github.com/shamiao/TRUNCATED-raspbian-zhcn-customized/blob/master/construct.sh)
+# set up keyboard layout
 sed -i 's/XKBLAYOUT=gb/XKBLAYOUT=at/g' /etc/default/keyboard
 dpkg-reconfigure --frontend=noninteractive keyboard-configuration > /dev/null 2> /dev/null
 invoke-rc.d keyboard-setup start > /dev/null 2> /dev/null
 debconf-get-selections | grep "xkb-keymap" | grep "at" > /dev/null 2> /dev/null && echo "- Tastaturlayout wurde eingerichtet." || echo "FEHLER: Tastaturlayout konnte nicht eingerichtet wer108.67.222.222 208.67.220.220 ' /etc/dhcpcd.conf
 den!"
 # ########################################
-# richte IP Adresse einrichten
+# setup ip address
 cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 rm /etc/dhcpcd.conf
 touch /etc/dhcpcd.conf
@@ -113,12 +113,52 @@ sed -i 's/#AddressFamily any/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/g' /etc/ssh/sshd_config
 sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/g' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-
 service ssh restart
 echo -e "\n- Public SSH Key wurde eingespielt"
-# ########################################
-# Supervisor Installation
-# ########################################
+# -------------------------------------------------------------
+# Step 4) install Filebeat for Raspberry Pi
+# -------------------------------------------------------------
+cd ~/APT-Detection/
+mkdir /etc/filebeat
+file="/root/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz"
+if [ -f "$file" ];
+then
+    # File exist!
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
+    echo -e "\n- Filebeat wurde enpackt und nach /etc/filebeat kopiert"
+else
+    # File doese not exist
+    cd ~
+    git clone https://github.com/eichi18/APT-Detection.git
+    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
+    echo -e "\n- Filebeat wurde von GitHub geladen, enpackt und nach /etc/filebeat kopiert"
+fi
+mkdir /usr/share/filebeat
+mkdir /usr/share/filebeat/bin
+mkdir /var/log/filebeat
+mkdir /var/lib/filebeat
+cp /etc/filebeat/filebeat /usr/share/filebeat/bin/
+chmod 750 /var/log/filebeat
+chmod 750 /etc/filebeat/
+chown -R root:root /usr/share/filebeat/*
+cp -r /etc/filebeat/module /usr/share/filebeat/
+echo -e "\n- Filebeat wurde installiert"
+# automatically start of filebeat
+echo "[Unit]" >> /lib/systemd/system/filebeat.service
+echo "Description=filebeat" >> /lib/systemd/system/filebeat.service
+echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/inde$
+echo "Wants=userwork-online.target" >> /lib/systemd/system/filebeat.service
+echo "After=network-online.target" >> /lib/systemd/system/filebeat.service
+echo "[Service]" >> /lib/systemd/system/filebeat.service
+echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml $
+echo "Restart=always" >> /lib/systemd/system/filebeat.service
+echo "[Install]" >> /lib/systemd/system/filebeat.service
+echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
+echo -e "\n- Konfiguration für Filebeat wurde erstellt"
+cat /lib/systemd/system/filebeat.service
+# -------------------------------------------------------------
+# Step 5) Supervisor installation
+# -------------------------------------------------------------
 apt-get install supervisor -y
 /etc/init.d/supervisor enable
 /etc/init.d/supervisor start
@@ -137,7 +177,6 @@ echo "stdout_logfile=/var/log/ssh.out.log" >> /etc/supervisor/conf.d/ssh.conf
 echo "stderr_logfile=/var/log/ssh.err.log" >> /etc/supervisor/conf.d/ssh.conf
 echo -e "\n- SSH Server Überwachung wurde zu Supervisor hinzugefügt"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
-echo "------------------------------------------------"
-echo "        Fortsetzen mit Honeypot Installation    "
-echo "------------------------------------------------"
-
+echo "-------------------------------------------------------"
+echo "  Fortsetzen mit eigentlicher Honeypot Installation    "
+echo "-------------------------------------------------------"

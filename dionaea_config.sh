@@ -1,3 +1,14 @@
+#!/bin/bash
+clear
+# -------------------------------------------------------------
+# Michael Eichinger, BSc
+# Release: v 1.0
+# Date: 26.03.2019
+# Email: office@eichinger.co.at
+# NOTE: installation script
+# Startin position is Raspberry Pi 2 or 3 with brand new
+# installation
+# Image: Stretch 13.11.2018
 # -------------------------------------------------------------
 # Step 1) change the static ip-address
 # -------------------------------------------------------------
@@ -16,7 +27,7 @@ raspi_gateway="10.0.0.1"
 raspi_pubgateway="192.168.1.1"
 raspi_dns='208.67.222.222 208.67.220.220'
 echo "###############################################"
-echo "Installations-Script         Version 2019-03-23"
+echo "Installations-Script         Version 2019-03-26"
 echo "Copyright Michael Eichinger                2019"
 echo "###############################################"
 echo "Dionaea Honeypot wird eingerichtet:"
@@ -25,13 +36,13 @@ echo " "
 # ########################################
 # edit SSH Banner
 rm /etc/ssh/ssh-banner-cowrie.txt
-cp ~/APT-Detection/ssh-banner-dionaea.txt /etc/ssh/
+cp ~/APT-Detection/dionaea/ssh-banner-dionaea.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-dionaea.txt
 sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-dionaea.txt/g' /etc/ssh/sshd_config
 sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_config
 # ########################################
-# update IP Adress
+# update IP address
 #
 echo " - IP Adresse wird angepasst"
 cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
@@ -47,11 +58,9 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 sed -i 's/raspberrypi/dionaea/g' /etc/hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hosts
 echo -e "\n- IP Adressen und Hostname wurden geändert"
-
 # -------------------------------------------------------------
-# Step 2) install dionaea
+# Step 2) install dionaea honeypot software
 # -------------------------------------------------------------
-# ########################################
 #
 # source: https://dionaea.readthedocs.io/en/latest/installation.html
 # downloading source code of dionaea
@@ -79,49 +88,7 @@ cp /root/APT-Detection/dionaea/etc/init.d/dionaea /etc/init.d/
 chmod 755 /etc/init.d/dionaea
 update-rc.d dionaea defaults
 /etc/init.d/dionaea start
-
-# -------------------------------------------------------------
-# Step 3) install Filebeat for Raspberry Pi
-# -------------------------------------------------------------
-cd ~/APT-Detection/
-mkdir /etc/filebeat
-file="/root/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz"
-if [ -f "$file" ];
-then
-    # File exist!
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
-    echo -e "\n- Filebeat wurde enpackt und nach /etc/filebeat kopiert"
-else
-    # File doese not exist
-    cd ~
-    git clone https://github.com/eichi18/APT-Detection.git
-    tar -xf ~/APT-Detection/filebeat/filebeat-6.4.0-linux-x86.tar.gz -C /etc/filebeat
-    echo -e "\n- Filebeat wurde von GitHub geladen, enpackt und nach /etc/filebeat kopiert"
-fi
-mkdir /usr/share/filebeat
-mkdir /usr/share/filebeat/bin
-mkdir /var/log/filebeat
-mkdir /var/lib/filebeat
-cp /etc/filebeat/filebeat /usr/share/filebeat/bin/
-chmod 750 /var/log/filebeat
-chmod 750 /etc/filebeat/
-chown -R root:root /usr/share/filebeat/*
-cp -r /etc/filebeat/module /usr/share/filebeat/
-echo -e "\n- Filebeat wurde installiert"
-
-# automatically start of filebeat
-echo "[Unit]" >> /lib/systemd/system/filebeat.service
-echo "Description=filebeat" >> /lib/systemd/system/filebeat.service
-echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/index.html" >> /lib/systemd/system/filebeat.service
-echo "Wants=userwork-online.target" >> /lib/systemd/system/filebeat.service
-echo "After=network-online.target" >> /lib/systemd/system/filebeat.service
-echo "[Service]" >> /lib/systemd/system/filebeat.service
-echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat" >> /lib/systemd/system/filebeat.service
-echo "Restart=always" >> /lib/systemd/system/filebeat.service
-echo "[Install]" >> /lib/systemd/system/filebeat.service
-echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
-echo -e "\n- Konfiguration für Filebeat wurde erstellt"
-cat /lib/systemd/system/filebeat.service
+# config for filebeat
 cp ~/APT-Detection/dionaea/filebeat.yml /etc/filebeat/
 echo -e "\n- Konfiguration für Filebeat Dionaea LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
@@ -129,4 +96,6 @@ systemctl enable filebeat.service
 service filebeat start
 sleep 3
 service filebeat status
-
+echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
+echo -e "\n"
+echo -e "\n nach einem finalen Reboot kann Dionaea fertig eingesetzt werden"
