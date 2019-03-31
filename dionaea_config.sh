@@ -64,9 +64,11 @@ echo -e "\n- IP Adressen und Hostname wurden geändert"
 #
 # source: https://dionaea.readthedocs.io/en/latest/installation.html
 # downloading source code of dionaea
-cd ~
-git clone https://github.com/DinoTools/dionaea.git
-cd  dionaea
+# install kernel headers
+apt-get install raspberrypi-kernel-headers
+# download the dionaea software
+git clone --depth=1 https://github.com/DinoTools/dionaea.git -b 0.8.0 /root/dionaea/ 
+cd  /root/dionaea
 # install required build dependencies before configuring and building dionaea
 apt-get install build-essential cmake check cython3 libcurl4-openssl-dev libemu-dev libev-dev -y
 apt-get install libglib2.0-dev libloudmouth1-dev libnetfilter-queue-dev libnl-3-dev libpcap-dev -y
@@ -78,16 +80,17 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/dionaea ..
 # run make to build and run make install to install the honeypot
 make
-sudo make install
+make install
 cp /opt/dionaea/etc/dionaea/dionaea.cfg /opt/dionaea/etc/dionaea/dionaea.cfg.dist
 echo -e "\n- Dionaea wurde installiert"
 # install ntp service
 apt-get install ntp -y
-# starting as service
-cp /root/APT-Detection/dionaea/etc/init.d/dionaea /etc/init.d/
-chmod 755 /etc/init.d/dionaea
-update-rc.d dionaea defaults
-/etc/init.d/dionaea start
+# starting as service and autostart
+cp /root/APT-Detection/dionaea/etc/systemd/system/dionaea.service /etc/systemd/system/
+chmod 644 /etc/systemd/system/dionaea.service
+systemctl daemon-reload
+systemctl start dionaea.service
+
 # config for filebeat
 cp ~/APT-Detection/dionaea/filebeat.yml /etc/filebeat/
 echo -e "\n- Konfiguration für Filebeat Dionaea LogDateien wurde eingerichtet"

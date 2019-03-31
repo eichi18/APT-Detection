@@ -1,0 +1,14 @@
+[Unit]
+Description=Dionaea Honeypot
+Requires=network.target
+Wants=ntpd.service
+After=network.target ntpd.service
+
+[Service]
+Type=forking
+ExecStart= /opt/dionaea/bin/dionaea -u dionaea -g dionaea -l message
+#ExecStart=/opt/dionaea/bin/dionaea -D -u dionaea -g dionaea -w /opt/dionaea/ -p /opt/dionaea/var/dionaea.pid -l message
+## ExecStart=/opt/dionaea/bin/dionaea -u nobody -g nogroup -r /opt/dionaea -w /opt/dionaea -p /opt/dionaea/var/dionaea.pid
+
+[Install]
+WantedBy=default.target

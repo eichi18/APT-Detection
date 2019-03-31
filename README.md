@@ -3,6 +3,9 @@
 
 The base installation is for all honeypots the same. This is the basic installation of the Raspberry Pi.
 ```bash
+sudo su
+apt-get update
+apt-get install git
 cd ~
 git clone https://github.com/eichi18/APT-Detection.git
 cd APT-Detection
@@ -33,7 +36,11 @@ for the finale step you must install cowrie once with this commands:
     virtualenv --python=python3 cowrie-env
     source cowrie-env/bin/activate
     pip install --upgrade pip
+    pip install pycrypto Crypto
     pip install --upgrade -r requirements.txt
+    # generate a key for the cowrie instance
+    ssh-keygen -t dsa -b 1024 -f ./var/lib/cowrie/ssh_host_dsa_key
+    ssh-keygen -t rsa -b 1024 -f ./var/lib/cowrie/ssh_host_dsa_key
     # start cowrie manually for test
     bin/cowrie start
 ```
