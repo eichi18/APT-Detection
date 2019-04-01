@@ -82,6 +82,9 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/dionaea ..
 make
 make install
 cp /opt/dionaea/etc/dionaea/dionaea.cfg /opt/dionaea/etc/dionaea/dionaea.cfg.dist
+# creat dionaea user
+adduser --disabled-password --gecos "" dionaea
+chown dionaea:dionaea -R /opt/dionaea/
 echo -e "\n- Dionaea wurde installiert"
 # install ntp service
 apt-get install ntp -y

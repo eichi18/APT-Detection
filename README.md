@@ -5,7 +5,7 @@ The base installation is for all honeypots the same. This is the basic installat
 ```bash
 sudo su
 apt-get update
-apt-get install git
+apt-get install git -y
 cd ~
 git clone https://github.com/eichi18/APT-Detection.git
 cd APT-Detection
