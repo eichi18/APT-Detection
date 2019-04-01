@@ -1,0 +1,15 @@
+[31032019 18:24:47] connection connection.c:227-warning: Could not bind 127.0.0.1:3306 (Address already in use)
+[31032019 18:24:47] processor processor.c:346-warning: var/dionaea/bistreams/2019-03-31/ <-> var/dionaea/bistreams/%Y-%m-%d/
+[31032019 18:24:47] python module.c:330-warning: start module.c
+[31032019 18:24:47] ihandlers dionaea/ihandlers.py:60-warning: START THE IHANDLERS
+[31032019 18:25:41] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 0
+[31032019 18:25:56] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:26:11] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:26:26] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:26:46] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 0
+[31032019 18:27:01] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:27:17] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:27:32] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:27:52] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 0
+[31032019 18:28:07] hpfeeds dionaea/hpfeeds.py:211-warning: hpclient error 1
+[31032019 18:28:11] log signals.c:48-warning: sigint_cb loop 0x76ed1608 w 0x22be450 revents 1024
