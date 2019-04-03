@@ -110,14 +110,14 @@ cowrie_start() {
         echo -e "AUTHBIND_ENABLED=no" $authfile
         AUTHBIND_ENABLED=no
     fi
-    authfile="/etc/authbind/byport/23"
-    if [ -f "$authfile" ]; then
-        echo -e "AUTHBIND_ENABLED=yes" $authfile
-        AUTHBIND_ENABLED=yes
-    else
-        echo -e "AUTHBIND_ENABLED=no" $authfile
-        AUTHBIND_ENABLED=no
-    fi
+#    authfile="/etc/authbind/byport/23"
+#    if [ -f "$authfile" ]; then
+#        echo -e "AUTHBIND_ENABLED=yes" $authfile
+#        AUTHBIND_ENABLED=yes
+#    else
+#        echo -e "AUTHBIND_ENABLED=no" $authfile
+#        AUTHBIND_ENABLED=no
+#    fi
 
     echo "Starting cowrie: [twistd ${TWISTEDARGS} cowrie ${COWRIEARGS}]..."
     if [ "$AUTHBIND_ENABLED" = "no" ]
