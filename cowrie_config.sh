@@ -100,10 +100,10 @@ sed -i 's/enabled = false/enabled = true/g' /home/cowrie/cowrie/etc/cowrie.cfg
 sed -i 's/listen_endpoints = tcp:2223:interface=0.0.0.0/listen_endpoints = tcp:23:interface='$raspi_ip'/g' /home/cowrie/cowrie/etc/cowrie.cfg
 touch /etc/authbind/byport/22
 chown cowrie:cowrie /etc/authbind/byport/22
-chmod 770 /etc/authbind/byport/22
+chmod 777 /etc/authbind/byport/22
 touch /etc/authbind/byport/23
 chown cowrie:cowrie /etc/authbind/byport/23
-chmod 770 /etc/authbind/byport/23
+chmod 777 /etc/authbind/byport/23
 # config for filebeat
 cp ~/APT-Detection/cowrie/filebeat.yml /etc/filebeat/
 echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
