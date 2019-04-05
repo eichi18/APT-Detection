@@ -64,3 +64,5 @@ cd ~/APT-Detection
 cd ~/APT-Detection
 ./honeyd_config.sh
 ```
+
+For more information please visit this link: http://www.honeyd.org/
