@@ -57,4 +57,10 @@ cd ~/APT-Detection
 ./dionaea_config.sh
 ``` 
 
+## Installing a honeyd Honeypot for the APT-Detection System
 
+1. Step Honeyd Honeypot Installation
+```bash
+cd ~/APT-Detection
+./honeyd_config.sh
+```
