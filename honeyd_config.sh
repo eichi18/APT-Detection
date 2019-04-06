@@ -65,30 +65,24 @@ apt-get updade -y
 # download the honeyd software
 git clone https://github.com/DataSoft/Honeyd.git /usr/src/Honeyd/
 cd  /usr/src
-
 # install required build dependencies before configuring and building honeyd
 apt-get install libdnet libevent-dev libdumbnet-dev libpcap-dev libpcre3-dev -y
 apt-get install libedit-dev bison flex libtool automake -y
-
 # install honeyd software
 cd Honeyd
 ./autogen.sh
 ./configure
 make
 make install
-
 # install farpd
 apt-get install farpd -y
-
 # copy the config
 cp /root/APT-Detection/honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
-
 # starting as service and autostart
 cp /root/APT-Detection/honeyd/etc/systemd/system/honeyd.service /etc/systemd/system/
 chmod 644 /etc/systemd/system/honeyd.service
 systemctl daemon-reload
 systemctl start honeyd.service
-
 echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
 echo -e "\n"
 echo -e "\n nach einem finalen Reboot kann Dionaea fertig eingesetzt werden"
