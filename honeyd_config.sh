@@ -61,9 +61,6 @@ echo -e "\n- IP Adressen und Hostname wurden geändert"
 # -------------------------------------------------------------
 # Step 2) install honeyd honeypot software
 # -------------------------------------------------------------
-#
-# downloading source code of dionaea
-# install kernel headers
 apt-get updade -y
 # download the honeyd software
 git clone https://github.com/DataSoft/Honeyd.git /usr/src/Honeyd/
@@ -85,6 +82,12 @@ apt-get install farpd -y
 
 # copy the config
 cp /root/APT-Detection/honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
+
+# starting as service and autostart
+cp /root/APT-Detection/honeyd/etc/systemd/system/honeyd.service /etc/systemd/system/
+chmod 644 /etc/systemd/system/honeyd.service
+systemctl daemon-reload
+systemctl start honeyd.service
 
 echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
 echo -e "\n"
