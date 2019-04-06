@@ -76,6 +76,12 @@ make
 make install
 # install farpd
 apt-get install farpd -y
+rm /etc/init.d/farpd
+cp /root/APT-Detection/honeyd/etc/systemd/system/farpd.service /etc/systemd/system/
+chmod 644 /etc/systemd/system/farpd.service
+systemctl daemon-reload
+systemctl enable farpd.service
+systemctl start farpd.service
 # copy the config
 cp /root/APT-Detection/honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
 # starting as service and autostart

@@ -1,0 +1,13 @@
+[Unit]
+Description=farpd
+Requires=network.target
+Wants=ntpd.service
+After=network.target ntpd.service
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/farpd -i eth1
+
+[Install]
+WantedBy=default.target
+
