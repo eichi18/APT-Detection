@@ -82,6 +82,7 @@ cp /root/APT-Detection/honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
 cp /root/APT-Detection/honeyd/etc/systemd/system/honeyd.service /etc/systemd/system/
 chmod 644 /etc/systemd/system/honeyd.service
 systemctl daemon-reload
+systemctl enable honeyd.service
 systemctl start honeyd.service
 echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
 echo -e "\n"

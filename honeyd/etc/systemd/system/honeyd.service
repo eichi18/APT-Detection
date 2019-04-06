@@ -6,7 +6,7 @@ After=network.target ntpd.service
 
 [Service]
 Type=forking
-ExecStart=/usr/src/Honeyd/honeyd -f /usr/src/Honeyd/honeyd.conf -l /var/log/honeyd/honeyd.log
+ExecStart=/usr/src/Honeyd/honeyd -f /usr/src/Honeyd/honeyd.conf -i eth1 -l /var/log/honeyd/honeyd.log
 
 [Install]
 WantedBy=default.target
