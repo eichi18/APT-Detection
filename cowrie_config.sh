@@ -104,8 +104,11 @@ chmod 777 /etc/authbind/byport/22
 touch /etc/authbind/byport/23
 chown cowrie:cowrie /etc/authbind/byport/23
 chmod 777 /etc/authbind/byport/23
-# config for filebeat
+# -------------------------------------------------------------
+# Step 4) config filebeat
+# -------------------------------------------------------------
 cp ~/APT-Detection/cowrie/filebeat.yml /etc/filebeat/
+cp ~/APT-Detection/cowrie/lib/systemd/system/filebeat.service /lib/systemd/system/
 echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service

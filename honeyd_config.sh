@@ -74,6 +74,8 @@ cd Honeyd
 ./configure
 make
 make install
+# logging
+mkdir /var/log/honeyd
 # install farpd
 apt-get install farpd -y
 rm /etc/init.d/farpd
