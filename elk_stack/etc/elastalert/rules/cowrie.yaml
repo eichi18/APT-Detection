@@ -26,7 +26,7 @@ realert:
 # The alert is use when a match is found
 alert:
     - "email"
-alert_subject: "ElastAler: Access to Cowrie"
+alert_subject: "A login or login attempt in a Cowrie Honeypot was detected!"
 alert_subject_args:
     - "@timestamp"
     - audit.object.name
@@ -41,4 +41,4 @@ email:
 # The alert is use when a match is found
 alert:
     - "command"
-command: ["/opt/sms_alert/sms_alert.py", "-n", "+436643230209", "-t", "{message}"]
+command: ["/opt/sms_alert/sms_alert.py", "-n", "+436643230209", "-t", "{json.message}"]
