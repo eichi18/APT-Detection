@@ -1,0 +1,49 @@
+create default
+set default default tcp action block
+set default default udp action block
+set default default icmp action block
+
+create windows
+set windows personality "Microsoft Windows XP SP2 or SP3"
+set windows default tcp action reset
+add windows tcp port 135 open
+add windows tcp port 139 open
+add windows tcp port 445 open
+
+set windows ethernet "00:00:24:ab:8c:12"
+bind 192.168.1.50 windows
+
+# Windows Web Server
+create win_web
+
+set win_web personality "Microsoft Windows Server 2003"
+set win_web default tcp action reset
+set win_web default udp action block
+set win_web default icmp action open
+set win_web uptime 12256
+add win_web tcp port 21 "sh /usr/src/Honeyd/scripts/win32/win2k/msftp.sh $ipsrc $sport$
+add win_web tcp port 80 "sh /usr/src/Honeyd/scripts/win32/win2k/iis.sh $ipsrc $sport $$
+add win_web udp port 161 "perl /usr/src/Honeyd/scripts/unix/general/snmp/fake-snmp.pl $
+
+set win_web ethernet "00:00:24:ab:8c:13"
+bind 192.168.1.51 win_web
+
+# Windows ‘Dev’ Server
+create win_dev
+set win_dev personality "Microsoft Windows Server 2003 R2 SP1"
+set win_dev default tcp action reset
+set win_dev default udp action block
+set win_dev default icmp action open
+set win_dev uptime 8826
+add win_dev tcp port 21 "sh scripts/win32/win2k/msftp.sh $ipsrc $sport $ipdst $dport"
+add win_dev tcp port 25 "sh scripts/win32/win2k/exchange-smtp.sh $ipsrc $sport $ipdst $
+add win_dev tcp port 80 "sh scripts/win32/win2k/iis.sh $ipsrc $sport $ipdst $dport"
+add win_dev tcp port 110 "sh scripts/win32/win2k/exchange-pop3.sh $ipsrc $sport $ipdst$
+add win_dev tcp port 143 "sh scripts/win32/win2k/exchange-imap.sh $ipsrc $sport $ipdst$
+add win_dev tcp port 389 "sh scripts/win32/win2k/ldap.sh $ipsrc $sport $ipdst $dport"
+add win_dev tcp port 5901 "sh scripts/win32/win2k/vnc.sh $ipsrc $sport $ipdst $dport"
+add win_dev udp port 161 "perl scripts/unix/general/snmp/fake-snmp.pl public private –$
+
+set win_dev ethernet "00:00:24:ab:8c:14"
+bind 192.168.1.52 win_dev
+
