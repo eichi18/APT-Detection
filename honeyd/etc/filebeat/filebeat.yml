@@ -1,0 +1,13 @@
+filebeat.prospectors:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/honeyd/*.log
+
+  document_type: apt-detection
+#  json.message_key: log
+
+#-------------------- Logstash output ---------------------
+output.logstash:
+  hosts: ["10.0.0.10:5044"]
+

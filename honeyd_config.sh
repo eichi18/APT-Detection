@@ -2,8 +2,8 @@
 clear
 # -------------------------------------------------------------
 # Michael Eichinger, BSc
-# Release: v 0.1
-# Date: 05.04.2019
+# Release: v 0.2
+# Date: 21.04.2019
 # Email: office@eichinger.co.at
 # NOTE: installation script
 # Startin position is Raspberry Pi 2 or 3 with brand new
@@ -27,7 +27,7 @@ raspi_gateway="10.0.0.1"
 raspi_pubgateway="192.168.1.1"
 raspi_dns='208.67.222.222 208.67.220.220'
 echo "###############################################"
-echo "Installations-Script         Version 2019-04-05"
+echo "Installations-Script         Version 2019-04-21"
 echo "Copyright Michael Eichinger                2019"
 echo "###############################################"
 echo "Honeyd Honeypot wird eingerichtet:"
@@ -85,7 +85,7 @@ systemctl daemon-reload
 systemctl enable farpd.service
 systemctl start farpd.service
 # copy the config
-cp /root/APT-Detection/honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
+cp /root/APT-Detection/honeyd/usr/src/Honeyd/honeyd.conf /usr/src/Honeyd/honeyd.conf
 # starting as service and autostart
 cp /root/APT-Detection/honeyd/etc/systemd/system/honeyd.service /etc/systemd/system/
 chmod 644 /etc/systemd/system/honeyd.service
@@ -95,3 +95,15 @@ systemctl start honeyd.service
 echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
 echo -e "\n"
 echo -e "\n nach einem finalen Reboot kann Dionaea fertig eingesetzt werden"
+# -------------------------------------------------------------
+# Step 3) config filebeat
+# -------------------------------------------------------------
+cp ~/APT-Detection/honeyd/etc/filebeat/filebeat.yml /etc/filebeat/
+cp ~/APT-Detection/honeyd/lib/systemd/system/filebeat.service /lib/systemd/system/
+echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
+cat /etc/filebeat/filebeat.yml
+systemctl enable filebeat.service
+service filebeat start
+sleep 3
+service filebeat status
+echo -e "\n- Filebeat Installation ist abgeschlossen"
