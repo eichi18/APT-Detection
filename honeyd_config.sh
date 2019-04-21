@@ -92,18 +92,20 @@ chmod 644 /etc/systemd/system/honeyd.service
 systemctl daemon-reload
 systemctl enable honeyd.service
 systemctl start honeyd.service
-echo -e "\n- Dionaea Honeypot Konfiguration wurde abgeschlossen!"
-echo -e "\n"
-echo -e "\n nach einem finalen Reboot kann Dionaea fertig eingesetzt werden"
 # -------------------------------------------------------------
 # Step 3) config filebeat
 # -------------------------------------------------------------
 cp ~/APT-Detection/honeyd/etc/filebeat/filebeat.yml /etc/filebeat/
 cp ~/APT-Detection/honeyd/lib/systemd/system/filebeat.service /lib/systemd/system/
-echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration für Filebeat Honeyd LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start
 sleep 3
 service filebeat status
 echo -e "\n- Filebeat Installation ist abgeschlossen"
+echo -e "\n"
+echo -e "\n- Honeyd Honeypot Konfiguration wurde abgeschlossen!"
+echo -e "\n"
+echo -e "\n nach einem finalen Reboot kann Honeyd fertig eingesetzt werden"
+
