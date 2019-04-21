@@ -1,0 +1,30 @@
+# ElastAlert Rule for Cowrie SSH Honepot
+es_host: 127.0.0.1
+es_port: 9200
+name: Cowrie_Rule_SMS
+
+# Type of the alert
+type: any
+
+# Index to search in elasticsearch
+index: apt-detection
+#num_events: 50
+#timeframe:
+#hours: 4
+
+filter:
+#    - term:
+#      name_field: "%(json.eventid)s"      
+#    - term:
+#      _type: "cowrie.login.success"
+    - query:
+         query_string:
+            query: "json.eventid: cowrie.session.connect"
+realert:
+    minutes: 1
+
+# The alert is use when a match is found
+alert:
+    - "command"
+command: ["/opt/sms_alert/sms_alert.py", "-n", "+436643230209", "-t", "APT-Detection Cowrie Alert: %(json.sensor)s %(json.message)s"]
+new_style_string_format: true

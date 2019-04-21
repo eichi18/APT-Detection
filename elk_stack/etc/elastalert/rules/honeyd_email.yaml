@@ -1,0 +1,49 @@
+# ElastAlert Rule for Cowrie SSH Honepot
+es_host: 127.0.0.1
+es_port: 9200
+name: Honeyd_Rule_Email
+
+# Type of the alert
+type: any
+
+# Index to search in elasticsearch
+index: apt-detection
+new_style_string_format: true
+
+#num_events: 50
+#timeframe:
+#hours: 4
+
+filter:
+#    - term:
+#      name_field: "%(json.eventid)s"      
+#    - term:
+#      _type: "cowrie.login.success"
+    - query:
+         query_string:
+            query: "tags: beats_input_codec_plain_applied"
+realert:
+    minutes: 1
+
+#aggregation: 
+#    minutes: 5
+
+# The alert is use when a match is found
+alert:
+    - "email"
+alert_subject: "ElastAlert: A login or login attempt in a Honeyd Honeypot was detected!"
+alert_subject_args:
+    - "@timestamp"
+    - beat.hostname
+
+alert_text_args:
+    - "@timestamp"
+    - beat.hostname
+    - json.timestamp
+    - json.message
+
+alert_text: |
+    ElastAlert: A login or login attempt in a Honeyd Honeypot was detected!
+email:
+    - "eichinger.michael@gmail.com"
+    - "office@eichinger.co.at"
