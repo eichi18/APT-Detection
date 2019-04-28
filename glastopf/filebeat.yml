@@ -2,10 +2,10 @@ filebeat.prospectors:
 - type: log
   enabled: true
   paths:
-    - /home/cowrie/cowrie/var/log/cowrie/*.json
+    - /opt/myhoneypot/log/glastopf.log
 
-  document_type: json
-  json.message_key: log
+#  document_type: json
+#  json.message_key: log
 
 #------------------- Logstash output -----------------------
 output.logstash:

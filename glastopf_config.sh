@@ -102,6 +102,9 @@ python setup.py install
 
 # copy honeypot demo installation to /opt/myhoneypot
 cp -r ~/APT-Detection/glastopf/opt/myhoneypot/ /opt/
+
+# install SQLITE3 database
+apt-get install sqlite3 -y
 echo -e "\n- Glastopf WebApplikation Honeypot wurde installiert"
 
 # -------------------------------------------------------------
