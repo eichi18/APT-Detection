@@ -63,8 +63,8 @@ echo -e "\n- IP Adressen und Hostname wurden geaendert"
 #
 apt-get update
 apt-get install python python-openssl python-gevent libevent-dev python-dev build-essential make -y
-apt-get install python-argparse python-chardet python-requests python-sqlalchemy python-lxml
-apt-get install python-beautifulsoup python-pip python-dev python-setuptools
+apt-get install python-argparse python-chardet python-requests python-sqlalchemy python-lxml -y
+apt-get install python-beautifulsoup python-pip python-dev python-setuptools -y
 # install PHP 5 
 echo 'deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' >> /etc/apt/sources.list
 apt-get update
