@@ -66,3 +66,10 @@ cd ~/APT-Detection
 ```
 
 For more information please visit this link: http://www.honeyd.org/
+
+## Installing a Glastopf Web-Application Honeypot for the APT-Detection System
+1. Step Glastopf Honeypot Installation
+```bash
+cd ~/APT-Detection
+./glastopf_config.sh
+```
