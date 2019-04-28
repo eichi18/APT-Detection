@@ -46,7 +46,7 @@ sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_confi
 #
 echo " - IP Adresse wird angepasst"
 cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
-sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'/'$raspi_net_mask'/g' /etc/dhcpcd.conf
+sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'\/'$raspi_net_mask'/g' /etc/dhcpcd.conf
 echo 'interface eth1' >> /etc/dhcpcd.conf
 echo 'static ip_address='$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
 echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
