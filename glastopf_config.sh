@@ -39,7 +39,7 @@ rm /etc/ssh/ssh-banner-glastopf.txt
 cp ~/APT-Detection/glastopf/ssh-banner-glastopf.txt /etc/ssh/
 echo " - SSH Banner wurde erstellt"
 cat /etc/ssh/ssh-banner-glastopf.txt
-sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-cowrie.txt/g' /etc/ssh/sshd_config
+sed -i 's/#Banner none/Banner \/etc\/ssh\/ssh-banner-glastopf.txt/g' /etc/ssh/sshd_config
 sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_config
 # ########################################
 # update IP address
@@ -62,33 +62,65 @@ echo -e "\n- IP Adressen und Hostname wurden geändert"
 # -------------------------------------------------------------
 #
 apt-get update
-#apt-get install python python-openssl python-gevent libevent-dev build-essential -y
+apt-get install python python-openssl python-gevent libevent-dev python-dev build-essential make -y
+apt-get install python-argparse python-chardet python-requests python-sqlalchemy python-lxml
+apt-get install python-beautifulsoup python-pip python-dev python-setuptools
+# install PHP 5 
+echo 'deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' >> /etc/apt/sources.list
+apt-get update
+apt-get install php5-fpm php5-dev liblapack-dev gfortran cython -y
+apt-get install libxml2-dev libxslt-dev -y
+apt-get install libmysqlclient-dev -y
+apt-get install php7.0-dev -y
+pip install --upgrade distribute
+# install configure the PHP sandbox
+cd /opt
+git clone git://github.com/mushorg/BFR.git
+cd BFR
+phpize
+./configure --enable-bfr
+make &&  make install
+# search for brf.so path and copy it to php.ini
+# find / -name bfr.so
+echo 'zend_extension = /usr/lib/php/20151012/bfr.so' >> /etc/php5/cli/php.ini
 
+# install pylibinjection
+pip install pylibinjection
 
+# install glastop honeypot
+cd /opt
+git clone https://github.com/mushorg/glastopf.git
+cd glastopf
+python setup.py install
+
+# run the glastopf for the first time
+#cd /opt
+#mkdir myhoneypot
+#cd myhoneypot
+#glastopf-runner
+#sed -i 's/host = 0.0.0.0/host = '$raspi_pubip'/g' /opt/myhoneypot/glastopf.cfg
+
+# copy honeypot demo installation to /opt/myhoneypot
+cp -r ~/APT-Detection/glastopf/opt/myhoneypot/ /opt/
 echo -e "\n- Glastopf WebApplikation Honeypot wurde installiert"
 
 # -------------------------------------------------------------
 # Step 3) config filebeat
 # -------------------------------------------------------------
-#cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
-#cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
+cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
+cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
 echo -e "\n- Konfiguration für Filebeat Glastopf LogDateien wurde eingerichtet"
-#cat /etc/filebeat/filebeat.yml
-#systemctl enable filebeat.service
-#service filebeat start
-#sleep 3
-#service filebeat status
+cat /etc/filebeat/filebeat.yml
+systemctl enable filebeat.service
+service filebeat start
+sleep 3
+service filebeat status
 echo -e "\n- Filebeat Installation ist abgeschlossen"
 # finish
-#apt autoremove -y
+apt autoremove -y
 echo -e "\n- Installation wurde bereinigt"
-# login as cowrie user to install the software
 echo -e "\n- GLASTOPF Honeypot Konfiguration wurde abgeschlossen!"
-echo -e "\n"
-echo -e "\n zur finalen Endinstallation sind folgende Befehle erforderlich:"
 echo -e "\n"
 echo -e "\n"
 echo -e "\n nach einem finalen Reboot kann Glastopf fertig eingesetzt werden"
 echo -e "\n"
-
-

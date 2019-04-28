@@ -1,0 +1,53 @@
+<html>
+
+    <head>
+        <title> Web </title>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="container" style="width: 800px; margin: 30px auto;">
+            <h1 style="text-align: center;"> Web </h1>
+
+            <hr />
+
+            <form action="/index" method="post" class="niceform">
+                <h2>Login Form</h2>
+                <div id="login_msg"> $login_msg </div>
+                <label for="login">Login:</label>
+                <input type="text" name="login" id="login" size="32" />
+                <br />
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" size="32" />
+                <br />
+                <input type="submit" name="submit" id="submit_login" value="Submit" />
+            </form>
+
+            <hr />
+
+            <h2>My Resource</h2>
+            <p>  </p>
+
+            <hr />
+
+            <form action="comments" method="POST" class="niceform">
+                <h2>Blog Comments</h2>
+                <label for="comment">Please post your comments for the blog</label>
+                <br />
+                <textarea name="comment" id="comment" rows="4" columns="300"></textarea>
+                <br />
+                <input type="submit" name="submit" id="submit_comment" value="Submit" />
+            </form>
+
+            <hr />
+
+            <div id="comments"> $comments </div>
+
+            <hr />
+
+            <div id="footer"> Footer Powered By </div>
+        </div>
+    </body>
+</html>
