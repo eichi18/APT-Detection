@@ -77,4 +77,4 @@ cd ~/APT-Detection
 For more details please visit this website: https://github.com/mushorg/glastopf/tree/master/docs/source/installation
 
 ## Note:
-The public SSH key id_ecdsa.pub stored in the repository must of course be replaced by its own key. 
+The public SSH key id_ecdsa.pub stored in the repository must of course be replaced by your own key. 
