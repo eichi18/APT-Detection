@@ -46,7 +46,7 @@ sed -i 's/ListenAddress 0.0.0.0/ListenAddress '$raspi_ip'/g' /etc/ssh/sshd_confi
 #
 echo " - IP Adresse wird angepasst"
 cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
-sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'/g' /etc/dhcpcd.conf
+sed -i 's/static ip_address=10.0.0.30\/24/static ip_address='$raspi_ip'/'$raspi_net_mask'/g' /etc/dhcpcd.conf
 echo 'interface eth1' >> /etc/dhcpcd.conf
 echo 'static ip_address='$raspi_pubip'/'$raspi_pubnet_mask >> /etc/dhcpcd.conf
 echo 'static routers='$raspi_pubgateway >> /etc/dhcpcd.conf
@@ -62,7 +62,7 @@ echo -e "\n- IP Adressen und Hostname wurden geändert"
 # -------------------------------------------------------------
 #
 apt-get update
-apt-get install python python-openssl python-gevent libevent-dev build-essential -y
+#apt-get install python python-openssl python-gevent libevent-dev build-essential -y
 
 
 echo -e "\n- Glastopf WebApplikation Honeypot wurde installiert"
@@ -70,17 +70,17 @@ echo -e "\n- Glastopf WebApplikation Honeypot wurde installiert"
 # -------------------------------------------------------------
 # Step 3) config filebeat
 # -------------------------------------------------------------
-cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
-cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
+#cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
+#cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
 echo -e "\n- Konfiguration für Filebeat Glastopf LogDateien wurde eingerichtet"
-cat /etc/filebeat/filebeat.yml
-systemctl enable filebeat.service
-service filebeat start
-sleep 3
-service filebeat status
+#cat /etc/filebeat/filebeat.yml
+#systemctl enable filebeat.service
+#service filebeat start
+#sleep 3
+#service filebeat status
 echo -e "\n- Filebeat Installation ist abgeschlossen"
 # finish
-apt autoremove -y
+#apt autoremove -y
 echo -e "\n- Installation wurde bereinigt"
 # login as cowrie user to install the software
 echo -e "\n- GLASTOPF Honeypot Konfiguration wurde abgeschlossen!"
