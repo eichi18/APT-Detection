@@ -1,0 +1,13 @@
+filebeat.prospectors:
+- type: log
+  enabled: true
+  paths:
+    - /home/cowrie/cowrie/var/log/cowrie/*.json
+
+  document_type: json
+  json.message_key: log
+
+#------------------- Logstash output -----------------------
+output.logstash:
+  hosts: ["10.0.0.10:5044"]
+
