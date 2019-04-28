@@ -106,9 +106,21 @@ cp -r ~/APT-Detection/glastopf/opt/myhoneypot/ /opt/
 # install SQLITE3 database
 apt-get install sqlite3 -y
 echo -e "\n- Glastopf WebApplikation Honeypot wurde installiert"
-
 # -------------------------------------------------------------
 # Step 3) config filebeat
+# -------------------------------------------------------------
+echo "[program:glastopf]" >> /etc/supervisor/conf.d/glastopf.conf
+echo "directory=/opt/myhoneypot/" >> /etc/supervisor/conf.d/glastopf.conf
+echo "command=bash -c 'exec glastopf-runner'" >> /etc/supervisor/conf.d/glastopf.conf
+echo "autostart=true" >> /etc/supervisor/conf.d/glastopf.conf
+echo "autorestart=true" >> /etc/supervisor/conf.d/glastopf.conf
+echo "stopasgroup=true" >> /etc/supervisor/conf.d/glastopf.conf
+echo "killasgroup=true" >> /etc/supervisor/conf.d/glastopf.conf
+echo -e "\n- glastopf.conf für Supervisor wurde angelegt"
+cat /etc/supervisor/conf.d/glastopf.conf
+
+# -------------------------------------------------------------
+# Step 4) config filebeat
 # -------------------------------------------------------------
 cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
 cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
