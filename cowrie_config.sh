@@ -56,7 +56,7 @@ echo -e "\n- fixe" $raspi_pubip " LAN IP Adresse wurde eingerichtet"
 # change hostname
 sed -i 's/raspberrypi/cowrie/g' /etc/hostname
 sed -i 's/raspberrypi/cowrie/g' /etc/hosts
-echo -e "\n- IP Adressen und Hostname wurden geändert"
+echo -e "\n- IP Adressen und Hostname wurden geaendert"
 # -------------------------------------------------------------
 # Step 2) install cowrie honeypot software
 # -------------------------------------------------------------
@@ -80,7 +80,7 @@ echo "stopasgroup=true" >> /etc/supervisor/conf.d/cowrie.conf
 echo "killasgroup=true" >> /etc/supervisor/conf.d/cowrie.conf
 echo "stdout_logfile=/var/log/cowrie/cowrie.out.log" >> /etc/supervisor/conf.d/cowrie.conf
 echo "stderr_logfile=/var/log/cowrie/cowrie.err.log" >> /etc/supervisor/conf.d/cowrie.conf
-echo -e "\n- cowrie.conf für Supervisor wurde angelegt"
+echo -e "\n- cowrie.conf fuer Supervisor wurde angelegt"
 cat /etc/supervisor/conf.d/cowrie.conf
 # create folder for cowrie log-file
 mkdir /var/log/cowrie
@@ -109,7 +109,7 @@ chmod 777 /etc/authbind/byport/23
 # -------------------------------------------------------------
 cp ~/APT-Detection/cowrie/filebeat.yml /etc/filebeat/
 cp ~/APT-Detection/cowrie/lib/systemd/system/filebeat.service /lib/systemd/system/
-echo -e "\n- Konfiguration für Filebeat Cowrie LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration fuer Filebeat Cowrie LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start

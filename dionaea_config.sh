@@ -57,7 +57,7 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 # change hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hostname
 sed -i 's/raspberrypi/dionaea/g' /etc/hosts
-echo -e "\n- IP Adressen und Hostname wurden geändert"
+echo -e "\n- IP Adressen und Hostname wurden geaendert"
 # -------------------------------------------------------------
 # Step 2) install dionaea honeypot software
 # -------------------------------------------------------------
@@ -96,7 +96,7 @@ systemctl start dionaea.service
 
 # config for filebeat
 cp ~/APT-Detection/dionaea/filebeat.yml /etc/filebeat/
-echo -e "\n- Konfiguration für Filebeat Dionaea LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration fuer Filebeat Dionaea LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start

@@ -56,7 +56,7 @@ echo -e "\n- fixe" $raspi_pubip " LAN IP Adresse wurde eingerichtet"
 # change hostname
 sed -i 's/raspberrypi/glastopf/g' /etc/hostname
 sed -i 's/raspberrypi/glastopf/g' /etc/hosts
-echo -e "\n- IP Adressen und Hostname wurden geändert"
+echo -e "\n- IP Adressen und Hostname wurden geaendert"
 # -------------------------------------------------------------
 # Step 2) install glastopf honeypot software
 # -------------------------------------------------------------
@@ -116,7 +116,7 @@ echo "autostart=true" >> /etc/supervisor/conf.d/glastopf.conf
 echo "autorestart=true" >> /etc/supervisor/conf.d/glastopf.conf
 echo "stopasgroup=true" >> /etc/supervisor/conf.d/glastopf.conf
 echo "killasgroup=true" >> /etc/supervisor/conf.d/glastopf.conf
-echo -e "\n- glastopf.conf für Supervisor wurde angelegt"
+echo -e "\n- glastopf.conf fuer Supervisor wurde angelegt"
 cat /etc/supervisor/conf.d/glastopf.conf
 
 # -------------------------------------------------------------
@@ -124,7 +124,7 @@ cat /etc/supervisor/conf.d/glastopf.conf
 # -------------------------------------------------------------
 cp ~/APT-Detection/glastopf/filebeat.yml /etc/filebeat/
 cp ~/APT-Detection/glastopf/lib/systemd/system/filebeat.service /lib/systemd/system/
-echo -e "\n- Konfiguration für Filebeat Glastopf LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration fuer Filebeat Glastopf LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start

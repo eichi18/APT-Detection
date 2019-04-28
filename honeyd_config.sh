@@ -57,7 +57,7 @@ echo -e "\n- Konfiguration wurde abgeschlossen!"
 # change hostname
 sed -i 's/raspberrypi/honeyd/g' /etc/hostname
 sed -i 's/raspberrypi/honeyd/g' /etc/hosts
-echo -e "\n- IP Adressen und Hostname wurden geändert"
+echo -e "\n- IP Adressen und Hostname wurden geaendert"
 # -------------------------------------------------------------
 # Step 2) install honeyd honeypot software
 # -------------------------------------------------------------
@@ -97,7 +97,7 @@ systemctl start honeyd.service
 # -------------------------------------------------------------
 cp ~/APT-Detection/honeyd/etc/filebeat/filebeat.yml /etc/filebeat/
 cp ~/APT-Detection/honeyd/lib/systemd/system/filebeat.service /lib/systemd/system/
-echo -e "\n- Konfiguration für Filebeat Honeyd LogDateien wurde eingerichtet"
+echo -e "\n- Konfiguration fuer Filebeat Honeyd LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start
