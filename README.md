@@ -73,3 +73,5 @@ For more information please visit this link: http://www.honeyd.org/
 cd ~/APT-Detection
 ./glastopf_config.sh
 ```
+
+For more details please visit this website: https://github.com/mushorg/glastopf/tree/master/docs/source/installation
