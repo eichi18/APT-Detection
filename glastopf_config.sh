@@ -63,8 +63,9 @@ echo -e "\n- IP Adressen und Hostname wurden geaendert"
 #
 apt-get update
 apt-get install python python-openssl python-gevent libevent-dev python-dev build-essential make -y
-apt-get install python-argparse python-chardet python-requests python-sqlalchemy python-lxml -y
-apt-get install python-beautifulsoup python-pip python-dev python-setuptools -y
+apt-get install python-chardet python-requests python-sqlalchemy python-lxml -y
+apt-get install python-beautifulsoup python-pip python-setuptools -y
+
 # install PHP 5 
 echo 'deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' >> /etc/apt/sources.list
 apt-get update
@@ -83,7 +84,7 @@ make &&  make install
 # search for brf.so path and copy it to php.ini
 # find / -name bfr.so
 echo 'zend_extension = /usr/lib/php/20151012/bfr.so' >> /etc/php5/cli/php.ini
-
+echo 'zend_extension = /usr/lib/php/20151012/bfr.so' >> /etc/php/7.0/cli/php.ini
 # install pylibinjection
 pip install pylibinjection
 
@@ -94,14 +95,14 @@ cd glastopf
 python setup.py install
 
 # run the glastopf for the first time
-#cd /opt
-#mkdir myhoneypot
+cd /opt
+mkdir myhoneypot
 #cd myhoneypot
 #glastopf-runner
-#sed -i 's/host = 0.0.0.0/host = '$raspi_pubip'/g' /opt/myhoneypot/glastopf.cfg
+sed -i 's/host = 0.0.0.0/host = '$raspi_pubip'/g' /opt/myhoneypot/glastopf.cfg
 
 # copy honeypot demo installation to /opt/myhoneypot
-cp -r ~/APT-Detection/glastopf/opt/myhoneypot/ /opt/
+#cp -r ~/APT-Detection/glastopf/opt/myhoneypot/ /opt/
 
 # install SQLITE3 database
 apt-get install sqlite3 -y
@@ -129,7 +130,7 @@ cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start
 sleep 5
-service filebeat status
+#service filebeat status
 echo -e "\n- Filebeat Installation ist abgeschlossen"
 # finish
 apt autoremove -y
