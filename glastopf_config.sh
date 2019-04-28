@@ -116,7 +116,7 @@ echo -e "\n- Konfiguration für Filebeat Glastopf LogDateien wurde eingerichtet"
 cat /etc/filebeat/filebeat.yml
 systemctl enable filebeat.service
 service filebeat start
-sleep 3
+sleep 5
 service filebeat status
 echo -e "\n- Filebeat Installation ist abgeschlossen"
 # finish
