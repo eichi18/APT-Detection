@@ -2,8 +2,8 @@
 clear
 # -------------------------------------------------------------
 # Michael Eichinger, BSc
-# Release: v 0.2
-# Date: 21.04.2019
+# Release: v 1.0
+# Date: 30.04.2019
 # Email: office@eichinger.co.at
 # NOTE: installation script
 # Startin position is Raspberry Pi 2 or 3 with brand new
@@ -27,7 +27,7 @@ raspi_gateway="10.0.0.1"
 raspi_pubgateway="192.168.1.1"
 raspi_dns='208.67.222.222 208.67.220.220'
 echo "###############################################"
-echo "Installations-Script         Version 2019-04-21"
+echo "Installations-Script         Version 2019-04-30"
 echo "Copyright Michael Eichinger                2019"
 echo "###############################################"
 echo "Honeyd Honeypot wird eingerichtet:"
