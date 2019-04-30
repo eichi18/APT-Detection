@@ -19,8 +19,8 @@ fi
 # ########################################
 # set parameter for this honeypot
 #
-raspi_ip="10.0.0.24" # this ist the first honeypot
-raspi_pubip="192.168.1.24"
+raspi_ip="10.0.0.23" # this ist the first honeypot
+raspi_pubip="192.168.1.23"
 raspi_net_mask="24"
 raspi_pubnet_mask="24"
 raspi_gateway="10.0.0.1"
