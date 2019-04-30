@@ -154,7 +154,7 @@ echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml $
 echo "Restart=always" >> /lib/systemd/system/filebeat.service
 echo "[Install]" >> /lib/systemd/system/filebeat.service
 echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
-echo -e "\n- Konfiguration für Filebeat wurde erstellt"
+echo -e "\n- Konfiguration fuer Filebeat wurde erstellt"
 cat /lib/systemd/system/filebeat.service
 # -------------------------------------------------------------
 # Step 5) Supervisor installation
@@ -175,7 +175,7 @@ echo "stopasgroup=true" >> /etc/supervisor/conf.d/ssh.conf
 echo "killasgroup=true" >> /etc/supervisor/conf.d/ssh.conf
 echo "stdout_logfile=/var/log/ssh.out.log" >> /etc/supervisor/conf.d/ssh.conf
 echo "stderr_logfile=/var/log/ssh.err.log" >> /etc/supervisor/conf.d/ssh.conf
-echo -e "\n- SSH Server Überwachung wurde zu Supervisor hinzugefügt"
+echo -e "\n- SSH Server Ueberwachung wurde zu Supervisor hinzugefuegt"
 echo -e "\n- Grundinstallation wurde abgeschlossen!"
 echo "-------------------------------------------------------"
 echo "  Fortsetzen mit eigentlicher Honeypot Installation    "
