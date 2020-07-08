@@ -57,8 +57,7 @@ update-locale LANG=de_AT.UTF-8 LANGUAGE=de_AT:de > /dev/null 2> /dev/null && ech
 sed -i 's/XKBLAYOUT=gb/XKBLAYOUT=at/g' /etc/default/keyboard
 dpkg-reconfigure --frontend=noninteractive keyboard-configuration > /dev/null 2> /dev/null
 invoke-rc.d keyboard-setup start > /dev/null 2> /dev/null
-debconf-get-selections | grep "xkb-keymap" | grep "at" > /dev/null 2> /dev/null && echo "- Tastaturlayout wurde eingerichtet." || echo "FEHLER: Tastaturlayout konnte nicht eingerichtet wer108.67.222.222 208.67.220.220 ' /etc/dhcpcd.conf
-den!"
+debconf-get-selections | grep "xkb-keymap" | grep "at" > /dev/null 2> /dev/null && echo "- Tastaturlayout wurde eingerichtet." || echo "FEHLER: Tastaturlayout konnte nicht eingerichtet werden!"
 # ########################################
 # setup ip address
 cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
@@ -146,11 +145,11 @@ echo -e "\n- Filebeat wurde installiert"
 # automatically start of filebeat
 echo "[Unit]" >> /lib/systemd/system/filebeat.service
 echo "Description=filebeat" >> /lib/systemd/system/filebeat.service
-echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/inde$
+echo "Documentation=https://www.elastic.co/guide/en/beats/filebeat/current/index.html" >> /lib/systemd/system/filebeat.service
 echo "Wants=userwork-online.target" >> /lib/systemd/system/filebeat.service
 echo "After=network-online.target" >> /lib/systemd/system/filebeat.service
 echo "[Service]" >> /lib/systemd/system/filebeat.service
-echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml $
+echo "ExecStart=/usr/share/filebeat/bin/filebeat -c /etc/filebeat/filebeat.yml -path.home /usr/share/filebeat -path.config /etc/filebeat -path.data /var/lib/filebeat -path.logs /var/log/filebeat" >> /lib/systemd/system/filebeat.service
 echo "Restart=always" >> /lib/systemd/system/filebeat.service
 echo "[Install]" >> /lib/systemd/system/filebeat.service
 echo "WantedBy=multi-user.target" >> /lib/systemd/system/filebeat.service
